@@ -1,0 +1,60 @@
+name: replay-and-paper
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Source manifest
+        run: sha256sum -c MANIFEST.sha256
+      - name: Supplement pins
+        working-directory: replay
+        run: sha256sum -c SHA256SUMS
+      - name: Install pinned replay dependencies
+        run: python -m pip install --disable-pip-version-check numpy==2.5.5 scipy==1.18.1 mpmath==1.4.1
+      - name: Certificates, probes and mutants
+        working-directory: replay
+        run: |
+          if grep -nE '^(import|from) +(sympy|torch)' run_all.py replay.py probe_xover.py probe_static.py mutants.py; then
+            echo "the replay scripts must import only numpy, scipy and mpmath"; exit 1
+          fi
+          python -B run_all.py
+      - name: Check prose punctuation
+        run: |
+          if grep -nP '\x{2014}' README.md CITATION.cff BUILD.md replay/README.md; then exit 1; fi
+  paper:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Tectonic and poppler
+        run: |
+          set -euo pipefail
+          curl -fsSL https://github.com/tectonic-typesetting/tectonic/releases/download/tectonic%400.17.0/tectonic-0.17.0-x86_64-unknown-linux-gnu.tar.gz | sudo tar -xz -C /usr/local/bin
+          tectonic --version
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends poppler-utils
+      - name: Build the manuscript
+        working-directory: paper
+        run: |
+          set -euo pipefail
+          SOURCE_DATE_EPOCH=1795132800 tectonic -X compile --keep-logs main.tex
+          if grep -nE 'Overfull|Undefined|Citation.*undefined|LaTeX Warning|Package .* Warning' main.log; then exit 1; fi
+          test -s main.pdf
+          pdfinfo -url main.pdf > urls.txt
+          grep -qF 'https://doi.org/10.5281/zenodo.24433375' urls.txt
+          grep -qF 'https://doi.org/10.5281/zenodo.24433377' urls.txt
+          grep -qF 'https://github.com/SuperMatics-Inc/penson-kolb-holstein-pair-odlro' urls.txt
+          pdfinfo main.pdf | grep -qE '^Pages:[[:space:]]+28$'
+          echo "underfull boxes: $(grep -c 'Underfull' main.log || true)"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: penson-kolb-holstein-pair-odlro-paper
+          path: paper/main.pdf
+          if-no-files-found: error

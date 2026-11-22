@@ -1,0 +1,41 @@
+cff-version: 1.2.0
+message: Please cite the preprint and this replay supplement.
+title: 'Replay supplement for Positive-temperature pair long-range order in the three-dimensional pi-flux Penson-Kolb-Hubbard-Holstein model with unbounded phonons'
+authors:
+  - family-names: Rens
+    given-names: Davis
+    affiliation: SuperMatics Inc.
+    orcid: 'https://orcid.org/0000-0001-5839-5197'
+doi: 10.5281/zenodo.24433377
+version: 1.0.0
+license: Apache-2.0
+references:
+  - type: article
+    status: preprint
+    title: 'Positive-temperature pair long-range order in the three-dimensional pi-flux Penson-Kolb-Hubbard-Holstein model with unbounded phonons'
+    authors:
+      - family-names: Rens
+        given-names: Davis
+        affiliation: SuperMatics Inc.
+        orcid: 'https://orcid.org/0000-0001-5839-5197'
+    year: 2026
+    doi: 10.5281/zenodo.24433375
+  - type: article
+    status: preprint
+    title: 'Explicit positive-temperature pair long-range order in Penson-Kolb-Hubbard models'
+    authors:
+      - family-names: Rens
+        given-names: Davis
+        affiliation: SuperMatics Inc.
+        orcid: 'https://orcid.org/0000-0001-5839-5197'
+    year: 2026
+    doi: 10.5281/zenodo.24428099
+  - type: software
+    title: 'Replay supplement for Explicit positive-temperature pair long-range order in Penson-Kolb-Hubbard models'
+    authors:
+      - family-names: Rens
+        given-names: Davis
+        affiliation: SuperMatics Inc.
+        orcid: 'https://orcid.org/0000-0001-5839-5197'
+    year: 2026
+    doi: 10.5281/zenodo.24428101

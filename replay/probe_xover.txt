@@ -1,0 +1,12 @@
+Positivity boundary of the certified floor, zero hopping, U = 0, kappa = 0,
+alpha = 1/2, T_0 = 0.06J, 300 x 16 rectangle cover.
+
+  omega/J =  1: positive floor for g_ph/J <= 0.3169 (next trial 0.3173 gives no floor), U_ph/J = g_ph^2/omega = 0.1004 [paper: 0.3169, 0.1004]
+  omega/J =  2: positive floor for g_ph/J <= 0.4568 (next trial 0.4571 gives no floor), U_ph/J = g_ph^2/omega = 0.1043 [paper: 0.4568, 0.1043]
+  omega/J =  5: positive floor for g_ph/J <= 0.7499 (next trial 0.7502 gives no floor), U_ph/J = g_ph^2/omega = 0.1125 [paper: 0.7499, 0.1125]
+
+Distance of the certified rows to that boundary at their own parameters:
+  row 6: g_ph/J = 0.70 lies at 93.3% of the boundary g_ph/J <= 0.7499 (omega/J = 5, boundary U_ph/J = 0.1125) [paper: 93.3%]
+  row 7: g_ph/J = 1.60 lies at 87.0% of the boundary g_ph/J <= 1.8386 (omega/J = 25, boundary U_ph/J = 0.1352) [paper: 87.0%]
+
+PROBE_XOVER_PASSED: all values agree within 0.00045 (65.1s)

@@ -1,0 +1,1766 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\numberwithin{equation}{section}
+\usepackage{microtype}
+\setlength{\emergencystretch}{1.5em}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xcolor}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\ii}{\mathrm{i}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\Ran}{\operatorname{Ran}}
+\newcommand{\id}{\mathbf{1}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Lamb}{\Lambda}
+\newcommand{\Lambstar}{\Lambda^{*}}
+\newcommand{\ph}{\mathrm{ph}}
+\newcommand{\eff}{\mathrm{eff}}
+\newcommand{\hop}{\mathrm{hop}}
+\newcommand{\pair}{\mathrm{pair}}
+\newcommand{\maj}{\mathrm{maj}}
+\newcommand{\ODLRO}{\mathrm{ODLRO}}
+\newcommand{\PKH}{\mathrm{PKH\text{-}Hol}}
+\newcommand{\Gam}{\Gamma}
+\newcommand{\fN}{N_{\mathrm{ph}}}
+\newcommand{\qedbox}{\ensuremath{\square}}
+\DeclareMathOperator{\var}{var}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\allowdisplaybreaks
+
+\title{Positive-temperature pair long-range order in the three-dimensional
+$\pi$-flux Penson-Kolb-Hubbard-Holstein model with unbounded phonons}
+\author{Davis Rens\\SuperMatics Inc.\\ORCID 0000-0001-5839-5197}
+\date{November 21, 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We extend a recently released theorem on explicit, constructive positive-temperature
+onsite pair off-diagonal long-range order in three-dimensional Penson-Kolb-Hubbard
+models to the case of on-site Holstein phonons with an unbounded oscillator Fock
+space. The pair-hopping interaction remains the only mechanism that can order pairs,
+while each site carries a quantum harmonic oscillator that shifts the local charge.
+Two parameters control the result: the pair-hopping amplitude $J>0$ and the static
+polaronic shift $U_{\mathrm{ph}}=g^{2}/\omega$, where $g$ is the on-site
+electron-phonon coupling and $\omega>0$ the phonon frequency. We show three things.
+First, reflection positivity, Gaussian domination and the infrared bound survive for
+every real $g$, every $\omega>0$, every real $U$ and every real hopping amplitude, on
+the full unbounded fermion-phonon Hilbert space: the odd-sublattice particle-hole
+transformation used for fermions must be accompanied by the odd-sublattice phonon
+parity, and the oscillator cutoff can then be removed by a trace-norm bridge.
+Second, the double-commutator sum rule for the bare pair operator acquires an exact
+static term $+4U_{\mathrm{ph}}(1-r)$, $r$ being the vacancy density, together with a
+density of displaced-oscillator excitations that is bounded by three elementary
+estimates. Third, combining the sum rule with a Gibbs variational polaron-dimer bound,
+an energy-entropy decomposition at a split phonon frequency, and the vacancy
+partition function at zero hopping, yields explicit lower bounds on the staggered pair
+order parameter at every temperature $0<T\le T_0$. We list fifteen parameter points
+where the lower bound is certified by outward-rounded interval arithmetic, covering
+adiabatic to anti-adiabatic phonons, on-site attraction from weak to strong, weak on-site
+repulsion shifted into the admissible window by the phonons, and the $\pi$-flux lattice
+with $|\kappa|/J\le 0.50$. The bound holds in the thermodynamic limit, with
+the oscillator cutoff taken to infinity first at fixed lattice size and then the
+lattice size to infinity. No critical temperature, no phase transition, and no
+material is claimed.
+\end{abstract}
+
+\tableofcontents
+
+\section{Introduction and relation to earlier work}\label{sec:intro}
+
+\subsection{The result being extended}
+
+The Penson-Kolb-Hubbard model \cite{penson1986} places two electrons on a bond with a
+pair-hopping amplitude $J$ and charges an on-site interaction $U$. In three
+dimensions, with the fermions on the full Fock space and no assumption about
+occupation or spin ordering, a recent preprint \cite{rens2026pkodlro} proves explicit
+positive-temperature lower bounds on the onsite pair order parameter, in two
+parameter regimes: at zero single-electron hopping with pair hopping $J>0$ and
+$U\ge-0.5J$, and on the $\pi$-flux lattice with real hopping of amplitude
+$|\kappa|\le0.5J$ and $U\ge0$. The method there is a chain of four ingredients:
+graded Majorana reflection positivity for the pair interaction in a bipartite
+particle-hole basis; the resulting Gaussian domination and Duhamel infrared bound;
+the Dyson-Lieb-Simon \cite{dyson1978} and Kennedy-Lieb-Shastry \cite{kennedy1988}
+double-commutator sum rule combined with a Falk-Bruch \cite{falk1969} fluctuation
+inequality; and two finite-temperature bounds, a Gibbs variational dimer free energy
+and an exact operator decomposition of the thermal energy, which close the argument at
+a threshold temperature $T_0$ that arises from the positivity of an explicit
+strictly convex function (Theorem \ref{thm:cert} below).
+
+The present paper asks whether that chain survives when each lattice site carries a
+quantum harmonic oscillator of frequency $\omega$ that couples to the local charge, the
+Holstein coupling \cite{holstein1959}. This is not a cosmetic addition. Local phonons
+are the standard microscopic origin of an effective attractive interaction between
+electrons, and in the strong-coupling limit they generate the polaron and
+charge-density-wave physics studied, for the Holstein-Hubbard model, by Miyao
+\cite{miyao2016} and, for ground-state spin properties, by Freericks and Lieb
+\cite{freericks1995}. Whether such phonons can be combined with a rigorous
+positive-temperature pair order bound has, to our knowledge, not been settled. What we
+find is that they can, with two structural modifications and one quantitative loss of
+reach.
+
+\subsection{What this paper adds}
+
+Three items are new relative to \cite{rens2026pkodlro}.
+
+\begin{enumerate}
+\item \emph{Reflection positivity with on-site phonons, at arbitrary coupling.} The
+  bipartite particle-hole transformation that turns the pair interaction into a
+  positive square also flips the sign of the local charge $n_{x}-1$ on the odd
+  sublattice. With a local Holstein coupling $g\,q_{x}(n_{x}-1)$ that transformation
+  therefore produces a staggered coupling, which changes sign under the reflection and
+  destroys the argument. The cure is to accompany the fermionic transformation by the
+  odd-sublattice phonon parity $\prod_{x\in\Lamb_{\text{odd}}}(-1)^{b_{x}^{\dagger}b_{x}}$,
+  which flips $q_{x}$ on the odd sublattice and leaves the oscillator number operator
+  invariant. The product of the two signs is $+1$, the electron-phonon Hamiltonian is
+  then invariant, and the decomposition is again a negative square across the
+  reflection plane. This holds for every real $g$, including arbitrarily strong
+  coupling, and for every $\omega>0$ (Theorem \ref{thm:rp}).
+\item \emph{Unbounded oscillators.} The oscillator space is infinite dimensional, so
+  the finite-cutoff reflection-positive matrix inequalities must be shown to pass to
+  the limit. We remove the cutoff at fixed lattice size with a trace-norm estimate
+  based on a cutoff-uniform lower bound on the local Holstein site Hamiltonian and a
+  Dyson-Duhamel expansion in the trace class (Theorem \ref{thm:bridge}). Reflection
+  positivity, Gaussian domination, and hence the infrared bound hold on the full
+  fermion-phonon space.
+\item \emph{Sum rule, energy, and entropy with phonons.} The double commutator of the
+  pair operator with the electron-phonon term is exactly on-site and momentum
+  independent (Lemma \ref{lem:on-site}); after the polaron completion of the square it
+  contributes a static term $+4U_{\mathrm{ph}}(1-r)$ with $U_{\mathrm{ph}}=g^{2}/\omega$
+  and $r$ the vacancy density, plus a term controlled by the density $\bar\nu$ of
+  displaced-oscillator excitations. We bound $\bar\nu$ by a variational dimer free
+  energy with a partial Lang-Firsov \cite{langfirsov1963} displacement, and we control
+  the oscillator entropy by splitting the frequency, $\omega=\tfrac12\omega+\tfrac12\omega$,
+  so that the thermal oscillator entropy is charged at $\tfrac12\omega$ while the
+  energy balance uses the full $\omega$. The result is the bound of Theorem
+  \ref{thm:cert} with the certified floors collected in Table \ref{tab:rows}.
+\end{enumerate}
+
+\subsection{Order of limits and what a reader should expect}
+
+All statements about the infinite system are obtained in two steps: the oscillator
+Fock cutoff is taken to infinity at fixed even lattice size $L$ (so that the model is
+the unbounded-oscillator model, and no truncated oscillator algebra is used), and only
+then $L\to\infty$ along even side lengths. The order parameter is a $\liminf$ over the
+resulting sequences. Consequently every bound in this paper is a statement about
+finite-temperature correlations of the untruncated model, not about a truncated
+approximation.
+
+The bounds are of the form: for every temperature $0<k_{\mathrm B}T\le T_0$, the
+staggered pair order parameter exceeds an explicit positive number. Nothing here
+identifies the largest such $T_0$, and nothing here is a statement about a critical
+temperature. The fifteen parameter points of Table \ref{tab:rows} are the points at
+which the positivity of the explicit function \eqref{eq:final} has been certified with
+outward-rounded interval arithmetic.
+
+\subsection{Organisation}
+
+Section \ref{sec:model} fixes the model, the polaron completion of the square, the
+order parameter, and the order of limits. Section \ref{sec:rp} contains the
+reflection-positivity chain, the Gaussian domination and infrared bounds, the bridge to
+unbounded oscillators, and an obstruction showing that a single oscillator shared by a
+bond that crosses the reflection plane cannot be handled this way. Section
+\ref{sec:sumrule} contains the double-commutator identity, the displaced-oscillator
+bounds, and the sum rule. Section \ref{sec:finiteT} contains the variational and the
+energy-entropy bounds and the certification scheme. Section \ref{sec:main} states the
+main theorem and the table. Section \ref{sec:scope} discusses regimes, the limits of
+the method, and lists what is not claimed. Section \ref{sec:supp} describes the
+accompanying scripts. The appendices record the numerical verification computations
+and the lattice integrals.
+
+\section{Model, conventions, and order of limits}\label{sec:model}
+
+\subsection{Lattice, fields, and Hilbert space}
+
+Let $L\ge2$ be an even integer and let
+\begin{equation}
+\Lamb:=\left(\Z/L\Z\right)^{3},\qquad |\Lamb|=L^{3},\qquad \Lambstar:=\left(\frac{2\pi}{L}\Z\right)^{3}
+\end{equation}
+be the periodic cubic lattice and its dual. The reflection planes are the three
+coordinate planes $P_{\mu}=\{x_{\mu}=0\}$; each splits
+$\Lamb=\Lamb_{-}\sqcup\Lamb_{+}$ into congruent halves and exchanges the even and odd
+sublattices,
+\begin{equation}
+\Lamb_{\text{even}}:=\{x:(-1)^{x_{1}+x_{2}+x_{3}}=+1\},\qquad
+\Lamb_{\text{odd}}:=\{x:(-1)^{x_{1}+x_{2}+x_{3}}=-1\},
+\end{equation}
+and we write $\theta$ for the geometric reflection across a plane $P$. Since $L$ is
+even, $\theta$ maps $\Lamb_{\text{even}}$ to $\Lamb_{\text{odd}}$.
+
+Fermions carry spin $\sigma\in\{\uparrow,\downarrow\}$ and are described by
+$a_{x,\sigma}$ on the fermion Fock space $\mathcal{F}(\Lamb)$; the on-site algebra is
+spanned by the pair operators
+\begin{equation}
+\Delta_{x}:=a_{x,\downarrow}a_{x,\uparrow},\qquad
+\Delta_{x}^{\dagger}=a_{x,\uparrow}^{\dagger}a_{x,\downarrow}^{\dagger},\qquad
+\Gam^{(1)}_{x}:=\Delta_{x}^{\dagger}+\Delta_{x},\qquad
+\Gam^{(2)}_{x}:=-\ii\big(\Delta_{x}^{\dagger}-\Delta_{x}\big),
+\label{eq:gamma-def}
+\end{equation}
+and by the local charge $n_{x}:=\sum_{\sigma}a^{\dagger}_{x,\sigma}a_{x,\sigma}$. Two
+elementary facts will be used repeatedly: on each site
+\begin{equation}
+\big(\Gam^{(1)}_{x}\big)^{2}=\big(\Gam^{(2)}_{x}\big)^{2}=P_{\mathcal{P}_{x}},\qquad
+\big[n_{x}-1,\Gam^{(1)}_{x}\big]=2\ii\Gam^{(2)}_{x},\qquad
+\big[n_{x}-1,\Gam^{(2)}_{x}\big]=-2\ii\Gam^{(1)}_{x},
+\label{eq:local-ids}
+\end{equation}
+where $P_{\mathcal{P}_{x}}:=\big(n_{x}-1\big)^{2}$ projects onto the sector
+$\mathcal{P}_{x}=\mathrm{span}\{|0\rangle_{x},|\uparrow\downarrow\rangle_{x}\}$ in which
+the site is either empty or doubly occupied, and
+$P_{\mathcal{V}_{x}}:=\id-P_{\mathcal{P}_{x}}$ projects onto the singly occupied
+sector $\mathcal{V}_{x}$, which we call the vacancy sector in the terminology of
+\cite{rens2026pkodlro}. Thus $(n_{x}-1)^{2}=P_{\mathcal{P}_{x}}$ and
+$P_{\mathcal{P}_{x}}+P_{\mathcal{V}_{x}}=\id$.
+
+Each site carries one oscillator, with $[b_{x},b_{y}^{\dagger}]=\delta_{xy}$ and
+\begin{equation}
+q_{x}:=\frac{b_{x}+b_{x}^{\dagger}}{\sqrt2},\qquad
+p_{x}:=\frac{\ii\,(b_{x}^{\dagger}-b_{x})}{\sqrt2},\qquad [q_{x},p_{y}]=\ii\delta_{xy},
+\end{equation}
+acting on $L^{2}(\R)$ at each site. The full Hilbert space is
+\begin{equation}
+\mathcal{H}(\Lamb):=\mathcal{F}(\Lamb)\otimes\bigotimes_{x\in\Lamb}L^{2}(\R),
+\end{equation}
+and $\mathcal{D}(\Lamb)$ is the subspace where every $b_{x}^{\dagger}b_{x}$ has finite
+moments; it is a common core for all operators below. Where the lattice dependence is
+inessential we write $\langle\cdot\rangle_{\beta}$ for the Gibbs expectation at inverse
+temperature $\beta>0$.
+
+\subsection{The Hamiltonian}
+
+With the pair-hopping amplitude $J>0$, the on-site interaction $U\in\R$, the
+single-electron hopping amplitude $\kappa\in\R$, the phonon frequency $\omega>0$ and the
+Holstein coupling $g\in\R$, the model is
+\begin{equation}
+H^{(\Lamb)}_{\PKH}:=H_{\pair}+H_{U}+H_{\hop,\pi}+H_{\ph}+H_{\text{el-ph}},
+\label{eq:H}
+\end{equation}
+with
+\begin{align}
+H_{\pair}&:=\frac{J}{2}\sum_{x\in\Lamb}\sum_{m=1}^{3}
+\Big(\Gam^{(1)}_{x}\Gam^{(1)}_{x+e_{m}}+\Gam^{(2)}_{x}\Gam^{(2)}_{x+e_{m}}\Big),
+\label{eq:Hpair}\\
+H_{U}&:=\frac{U}{2}\sum_{x\in\Lamb}\big(P_{\mathcal{V}_{x}}-\id\big),
+\label{eq:HU}\\
+H_{\hop,\pi}&:=\sum_{x\in\Lamb}\sum_{m=1}^{3}\sum_{\sigma\in\{\uparrow,\downarrow\}}
+\Big(t^{(\pi)}_{x,x+e_{m}}a_{x,\sigma}^{\dagger}a_{x+e_{m},\sigma}
++\overline{t^{(\pi)}_{x,x+e_{m}}}\,a_{x+e_{m},\sigma}^{\dagger}a_{x,\sigma}\Big),
+\label{eq:Hhop}\\
+H_{\ph}&:=\omega\sum_{x\in\Lamb}b_{x}^{\dagger}b_{x},\qquad
+H_{\text{el-ph}}:=g\sum_{x\in\Lamb}q_{x}\big(n_{x}-1\big).
+\label{eq:Hph}
+\end{align}
+The interaction \eqref{eq:HU} equals $-U\sum_{x}(n_{x,\uparrow}n_{x,\downarrow}-\frac12(n_{x,\uparrow}+n_{x,\downarrow}))$
+minus the constant $\frac{U}{2}|\Lamb|$, so no correlation is affected, and as in
+\cite{rens2026pkodlro} the coupling $U>0$ is attractive: a doubly occupied site pays
+$-\frac{U}{2}$ while a singly occupied one pays $0$, so pair formation lowers the energy,
+and $U<0$ is repulsive. The form \eqref{eq:HU} is the one for which the polaron identity
+\eqref{eq:polaron} collects the interaction and the electron-phonon term into a single
+expression in $U_{\eff}$. The amplitudes in \eqref{eq:Hhop} satisfy $|\kappa|=|t^{(\pi)}_{x,y}|$ and
+$t^{(\pi)}_{y,x}=\overline{t^{(\pi)}_{x,y}}$, which is exactly the Hermiticity of
+\eqref{eq:Hhop}; in the standard gauge they are purely imaginary,
+$t^{(\pi)}_{x,x+e_{m}}=\ii\kappa s^{(m)}_{x}$ with $s^{(m)}_{x}\in\{\pm1\}$, hence
+antisymmetric, $t^{(\pi)}_{y,x}=-t^{(\pi)}_{x,y}$, and the product of phases around every
+elementary plaquette equals $-1$, that is, the flux is $\pi$ per plaquette, in the sense
+of Lieb's flux phase \cite{lieb1994,macris1996}. No explicit gauge is needed below. The
+$\kappa=0$ case is called the zero-hopping case; it is the Penson-Kolb-Hubbard model
+with Holstein phonons.
+
+Two derived couplings appear throughout:
+\begin{equation}
+U_{\mathrm{ph}}:=\frac{g^{2}}{\omega}\qquad(\text{static polaronic shift}),
+\qquad
+U_{\eff}:=U+U_{\mathrm{ph}}\qquad(\text{effective local coupling}).
+\label{eq:Uph}
+\end{equation}
+
+The hypotheses on the parameters are those of \cite{rens2026pkodlro} transported to the
+phonon problem. In the zero-hopping case $\kappa=0$ we require
+\begin{equation}
+U_{\eff}\ge-\frac{J}{2},
+\label{eq:HypA}
+\end{equation}
+and in the $\pi$-flux case we require
+\begin{equation}
+U_{\eff}\ge0,\qquad \frac{|\kappa|}{J}\le\frac12 .
+\label{eq:HypB}
+\end{equation}
+These conditions are not needed for reflection positivity, Gaussian domination or the
+infrared bound, which hold for all real $U$, $\kappa$ and $g$ (Section \ref{sec:rp}); they
+delimit the region in which the quantitative bounds of Sections \ref{sec:sumrule} and
+\ref{sec:finiteT} are available. In the zero-hopping case \eqref{eq:HypA} reproduces the
+range used in \cite{rens2026pkodlro}, and $U_{\eff}\ge0$ in addition makes the vacancy
+partition bound \eqref{eq:rmax} available. When $\kappa\ne0$ the vacancy bound is not
+available, so $r_{\max}=1$ is used, and \eqref{eq:HypB} keeps the hopping cost
+\eqref{eq:ehop} small compared with the pair energy. Note that \eqref{eq:HypA} refers
+to $U_{\eff}$ and not to $U$: the phonons shift the admissible interval of the local
+interaction, which is the mechanism behind rows 1 and 2 of Table \ref{tab:rows}.
+
+\subsection{Polaron completion of the square}
+
+Combining the oscillator energy with the Holstein coupling and the local interaction
+gives an exact single-site identity, which is the reason the static shift \eqref{eq:Uph}
+appears everywhere.
+
+\begin{lemma}[Polaron identity]\label{lem:polaron}
+For every real $g$, every $\omega>0$ and every $U$, and with
+\begin{equation}
+\tilde b_{x}:=b_{x}+\frac{g}{\sqrt2\,\omega}\big(n_{x}-1\big),\qquad
+\tilde b_{x}^{\dagger}\tilde b_{x}=b_{x}^{\dagger}b_{x}+\frac{g}{\omega}q_{x}\big(n_{x}-1\big)+\frac{U_{\mathrm{ph}}}{2}P_{\mathcal{P}_{x}},
+\label{eq:tildeb}
+\end{equation}
+one has, on $\mathcal{D}(\Lamb)$,
+\begin{equation}
+H_{\ph}+H_{\text{el-ph}}+H_{U}
+=\omega\sum_{x\in\Lamb}\tilde b_{x}^{\dagger}\tilde b_{x}
++\frac{U_{\eff}}{2}\sum_{x\in\Lamb}\big(P_{\mathcal{V}_{x}}-\id\big),
+\label{eq:polaron}
+\end{equation}
+and, for the single-site term $h_{x}:=\omega b_{x}^{\dagger}b_{x}+g q_{x}(n_{x}-1)+\frac{U}{2}(P_{\mathcal{V}_{x}}-\id)$,
+the operator inequality
+\begin{equation}
+h_{x}\ge\frac{\omega}{2}\,b_{x}^{\dagger}b_{x}-c_{\mathrm{loc}}\,\id,\qquad
+c_{\mathrm{loc}}:=\frac{g^{2}}{\omega}+\frac{|U|}{2}.
+\label{eq:lower}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The first identity is the completion of the square in the oscillator variable:
+$\omega b^{\dagger}b+g q(n-1)=\omega\tilde b^{\dagger}\tilde b-\frac{g^{2}}{2\omega}(n-1)^{2}$
+with $(n-1)^{2}=P_{\mathcal{P}_{x}}=\id-P_{\mathcal{V}_{x}}$. Hence
+$H_{\ph}+H_{\text{el-ph}}=\omega\sum_{x}\tilde b_{x}^{\dagger}\tilde b_{x}+\frac{U_{\mathrm{ph}}}{2}\sum_{x}(P_{\mathcal{V}_{x}}-\id)$,
+and adding $H_{U}=\frac{U}{2}\sum_{x}(P_{\mathcal{V}_{x}}-\id)$ gives \eqref{eq:polaron}.
+
+For the inequality, write $\omega b^{\dagger}b=\frac{\omega}{2}b^{\dagger}b+\frac{\omega}{2}b^{\dagger}b$
+and complete the square in the second half,
+$\frac{\omega}{2}b^{\dagger}b+g q(n-1)=\frac{\omega}{2}\big(b^{\dagger}+\frac{\sqrt2 g}{\omega}(n-1)\big)\big(b+\frac{\sqrt2 g}{\omega}(n-1)\big)-\frac{g^{2}}{\omega}(n-1)^{2}$,
+which is a positive square minus a bounded term; together with
+$\frac{U}{2}(P_{\mathcal{V}_{x}}-\id)\ge-\frac{|U|}{2}\id$ this gives \eqref{eq:lower}.
+\end{proof}
+
+The operator $\tilde b_{x}$ is the annihilation operator of the displaced oscillator,
+and $\tilde b_{x}^{\dagger}\tilde b_{x}$ counts displaced (polaronic) excitations. The
+identity \eqref{eq:polaron} is the exact statement that phonons and local interaction enter the
+Hamiltonian only through $U_{\eff}$ and through the excitation operator $\tilde b_{x}$.
+
+\begin{remark}[Relation to the partially displaced variational state]\label{rem:LF}
+A Lang-Firsov transformation \cite{langfirsov1963} with displacement fraction
+$\lambda\in[0,1]$,
+\begin{equation}
+U_{\mathrm{LF}}(\lambda):=\exp\Big(-\frac{\lambda g}{\sqrt2\,\omega}\sum_{x\in\Lamb}\big(b_{x}^{\dagger}-b_{x}\big)\big(n_{x}-1\big)\Big),
+\label{eq:LF}
+\end{equation}
+is unitary, commutes with $n_{x}$, and multiplies a pair-hopping matrix element by the
+coherent-state overlap
+\begin{equation}
+g_{\eff}(\lambda):=J\Big|\langle 0_{x}|\exp\Big(\frac{\sqrt2\lambda g}{\omega}(b_{x}^{\dagger}-b_{x})\Big)|0_{x}\rangle\Big|^{2}
+=J\exp\Big(-\frac{2\lambda^{2}g^{2}}{\omega^{2}}\Big),
+\label{eq:geff}
+\end{equation}
+while shifting the local energy to $-\frac{U_{\eff}}{2}+\frac{(1-\lambda)^{2}g^{2}}{2\omega}$
+per site. Equation \eqref{eq:geff} is the Franck-Condon suppression of pair hopping by the
+phonon cloud and is the origin of the parameter $\lambda$ in Section \ref{sec:finiteT}.
+\end{remark}
+
+\subsection{Order parameter and order of limits}
+
+The object bounded below is the staggered, or $\pi$-point, pair correlation. Let
+\begin{equation}
+\hat\Gam^{(a)}_{\mathbf p}:=|\Lamb|^{-1/2}\sum_{x\in\Lamb}\e^{-\ii\mathbf p\cdot x}\Gam^{(a)}_{x},
+\qquad \mathbf p\in\Lambstar ,
+\end{equation}
+and set $\mathbf Q:=(\pi,\pi,\pi)$.
+
+\begin{definition}[Order parameters]\label{def:order}
+For $\beta>0$,
+\begin{align}
+m_{0}^{2}(T)&:=\liminf_{\substack{L\to\infty\\ L\in2\N}}
+\frac{1}{|\Lamb|^{2}}\sum_{x,y\in\Lamb}(-1)^{x_{1}+x_{2}+x_{3}+y_{1}+y_{2}+y_{3}}
+\big\langle\Gam^{(1)}_{x}\Gam^{(1)}_{y}\big\rangle^{(\Lamb)}_{\beta},
+\label{eq:m0}\\
+m^{2}_{\ODLRO}(T)&:=\liminf_{\substack{L\to\infty\\ L\in2\N}}
+\frac{1}{|\Lamb|^{2}}\sum_{x,y\in\Lamb}(-1)^{x_{1}+x_{2}+x_{3}+y_{1}+y_{2}+y_{3}}
+\big\langle\Delta_{x}^{\dagger}\Delta_{y}\big\rangle^{(\Lamb)}_{\beta}.
+\label{eq:modlro}
+\end{align}
+\end{definition}
+
+Since $\Gam^{(1)}_{x}=\Delta_{x}^{\dagger}+\Delta_{x}$ and the expectations of
+$\Delta\Delta$ and $\Delta^{\dagger}\Delta^{\dagger}$ vanish by global $U(1)$ charge conservation,
+the two objects differ by a factor of two,
+\begin{equation}
+m_{0}^{2}(T)=2\,m^{2}_{\ODLRO}(T),
+\label{eq:factor2}
+\end{equation}
+so a positive lower bound on $m_{0}^{2}$ of the form stated in Theorem \ref{thm:cert}
+is a lower bound $m^{2}_{\ODLRO}\ge\frac12 m_{0,\mathrm{lo}}^{2}$ on the pair order
+parameter itself. We quote both in Table \ref{tab:rows}.
+
+The limits are always taken in the order
+\begin{equation}
+\fN\to\infty\quad\text{at fixed even }L,\qquad\text{then}\quad L\to\infty\ \text{along even }L .
+\label{eq:order}
+\end{equation}
+The first limit removes the oscillator cutoff, and is the content of Theorem
+\ref{thm:bridge}; the second produces the Brillouin-zone integrals of Appendix
+\ref{app:integrals}. The order parameter \eqref{eq:modlro} is a two-point correlation of the
+$\mathbf Q$ Fourier component, that is, of the staggered pair field; it is the quantity
+that is positive in the usual sense of off-diagonal long-range order
+\cite{yang1989,lieb1989}. No claim is made about any other Fourier component.
+
+\section{Reflection positivity with unbounded oscillators}\label{sec:rp}
+
+This section contains the first modification of \cite{rens2026pkodlro} required by
+phonons: reflection positivity is not automatic, because the particle-hole
+transformation that makes the pair interaction a square flips the sign of the local
+charge on one sublattice, which produces a staggered Holstein coupling. The cure is a
+second unitary, acting on the oscillators.
+
+\subsection{Majorana operators and the graded algebra}
+
+Define, for $x\in\Lamb$ and $\sigma\in\{\uparrow,\downarrow\}$,
+\begin{equation}
+\begin{aligned}
+\xi_{x,\sigma}&:=a_{x,\sigma}+a_{x,\sigma}^{\dagger},\qquad
+\eta_{x,\sigma}:=\ii\big(a_{x,\sigma}^{\dagger}-a_{x,\sigma}\big),\\
+\{\xi_{x,\sigma},\xi_{y,\tau}\}&=\{\eta_{x,\sigma},\eta_{y,\tau}\}=2\delta_{xy}\delta_{\sigma\tau},\qquad
+\{\xi_{x,\sigma},\eta_{y,\tau}\}=0 .
+\end{aligned}
+\label{eq:maj}
+\end{equation}
+In this basis the local pair and charge operators are
+\begin{equation}
+\Gam^{(1)}_{x}=-\frac{\ii}{2}\big(\xi_{x,\uparrow}\eta_{x,\downarrow}+\eta_{x,\uparrow}\xi_{x,\downarrow}\big),\qquad
+\Gam^{(2)}_{x}=-\frac{\ii}{2}\big(\xi_{x,\uparrow}\xi_{x,\downarrow}-\eta_{x,\uparrow}\eta_{x,\downarrow}\big),\qquad
+n_{x}-1=\frac{\ii}{2}\big(\xi_{x,\uparrow}\eta_{x,\uparrow}+\xi_{x,\downarrow}\eta_{x,\downarrow}\big).
+\label{eq:maj-gamma}
+\end{equation}
+The Majorana monomials of even degree generate the even algebra
+$\mathcal{A}_{\mathrm{el}}(\Lamb)$, on which the fermion parity
+$\prod_{x}(-1)^{n_{x}}$ acts trivially; the odd monomials form the odd part, and the
+$\Z_{2}$ grading is what makes the Majorana reflection positivity of Jaffe and
+Pedrocchi \cite{jaffe2015a,jaffe2015b} applicable. The oscillator algebra
+$\mathcal{A}_{\ph}(\Lamb)$ is graded even, since it commutes with all Majoranas.
+
+\subsection{The two unitaries}
+
+The first unitary is the bipartite particle-hole transformation that is the basis of
+the whole method and that, in the formulation of \cite{koma2022}, is Koma's on-site
+gauge transformation. Write $\tilde U_{1}:=\big(U_{1}U_{\ph,\text{odd}}\big)$, where
+$U_{1}$ is diagonal in the occupation basis $\{n_{x,\sigma}\}$ and $U_{\ph,\text{odd}}$
+sends $\xi_{x,\sigma}\mapsto\xi_{x,\sigma}$, $\eta_{x,\sigma}\mapsto-\eta_{x,\sigma}$ on
+the odd sublattice and acts as the identity on the even sublattice. By \eqref{eq:maj-gamma},
+\begin{equation}
+\Gam^{(1)}_{x}\longmapsto(-1)^{x_{1}+x_{2}+x_{3}}\Gam^{(1)}_{x},\qquad
+\Gam^{(2)}_{x}\longmapsto\Gam^{(2)}_{x},\qquad
+n_{x}-1\longmapsto(-1)^{x_{1}+x_{2}+x_{3}}\big(n_{x}-1\big),
+\label{eq:gammamap}
+\end{equation}
+so that $H_{U}$, which depends on $P_{\mathcal{P}_{x}}=(n_{x}-1)^{2}$ only, is
+invariant, and the pair interaction across a bond becomes a square of differences.
+This is exactly the fermionic step in \cite{rens2026pkodlro}.
+
+The problem is the Holstein term. Under $\tilde U_{1}$ alone the coupling becomes
+\begin{equation}
+g\sum_{x\in\Lamb}q_{x}\big(n_{x}-1\big)
+\;\longmapsto\;
+g\sum_{x\in\Lamb}(-1)^{x_{1}+x_{2}+x_{3}}q_{x}\big(n_{x}-1\big),
+\end{equation}
+a staggered coupling which changes sign under the reflection $\theta$ if the oscillator
+coordinates are reflected in the natural way $\theta_{\ph}(q_{x})=+q_{\theta(x)}$:
+the term is then neither invariant nor a positive square, and the decomposition of the
+transformed Hamiltonian into a part supported on $\Lamb_{-}$ plus its reflection is
+lost. Reflecting the oscillator antisymmetrically instead,
+$\theta_{\ph}(q_{x})=-q_{\theta(x)}$, does not help: for the oscillator observable
+$A=q_{x}$ supported on the negative half one then has
+$\langle A\,\vartheta(A)\rangle_{\beta}=-\langle q_{x}q_{\theta(x)}\rangle_{\beta}$,
+which violates reflection positivity already in the bosonic sector. The computational
+check in Appendix \ref{app:checks} reproduces the second failure, with
+$\lambda_{\min}=-0.0263317$ in the odd sector for the antisymmetric reflection, on the
+small cluster used there.
+
+The second unitary repairs this. On the odd sublattice only, act with the phonon
+parity
+\begin{equation}
+\begin{gathered}
+U^{\ph}_{\text{parity,odd}}:=\prod_{x\in\Lamb_{\text{odd}}}(-1)^{b_{x}^{\dagger}b_{x}},
+\qquad
+U^{\ph}_{\text{parity,odd}}\,b_{x}^{\dagger}b_{x}\,\big(U^{\ph}_{\text{parity,odd}}\big)^{\dagger}=b_{x}^{\dagger}b_{x},\\
+U^{\ph}_{\text{parity,odd}}\,q_{x}\,\big(U^{\ph}_{\text{parity,odd}}\big)^{\dagger}
+=\begin{cases}+q_{x},&x\in\Lamb_{\text{even}},\\ -q_{x},&x\in\Lamb_{\text{odd}}.\end{cases}
+\end{gathered}
+\label{eq:parity}
+\end{equation}
+Under the product unitary
+\begin{equation}
+\mathcal{U}:=\big(U_{1}U_{\ph,\text{odd}}\big)\otimes U^{\ph}_{\text{parity,odd}}
+\label{eq:U}
+\end{equation}
+the product $q_{x}(n_{x}-1)$ acquires two minus signs on the odd sublattice and none on
+the even sublattice, hence
+\begin{equation}
+\mathcal{U}\,q_{x}\big(n_{x}-1\big)\,\mathcal{U}^{\dagger}=q_{x}\big(n_{x}-1\big)
+\quad\text{for all }x\in\Lamb,
+\label{eq:invariant}
+\end{equation}
+and $H_{\ph}+H_{\text{el-ph}}$ and $H_{U}$ are invariant. Note that the parity is
+diagonal in the oscillator number basis and therefore commutes with any oscillator
+Fock truncation; this is what makes the cutoff argument of Section \ref{sec:bridge}
+compatible with \eqref{eq:parity}.
+
+\begin{remark}[Why the parity is not optional]\label{rem:parity}
+The two unitaries act on disjoint degrees of freedom and each contributes a sign that
+depends on the sublattice. Either one alone produces a staggered, reflection-odd
+coupling; only the product is reflection-symmetric. Equivalently, the local Holstein
+term is invariant under the two operations only in combination, and the phonon parity
+is the oscillator analogue of the odd-sublattice charge flip. The same mechanism
+applies to any on-site coupling of the form $q_{x}f(n_{x})$ with $f$ odd about
+$n_{x}=1$.
+\end{remark}
+
+\subsection{Reflection-positive decomposition}
+
+Let $h=\{h_{m}(x)\in\R\}$ be a collection of real source fields on the nearest-neighbour
+bonds and consider the source-dressed Hamiltonian
+\begin{equation}
+\begin{aligned}
+H^{(\Lamb)}_{\PKH}(h):={}&\frac{J}{4}\sum_{x\in\Lamb}\sum_{m=1}^{3}
+\Big[\Gam^{(1)}_{x}+\Gam^{(1)}_{x+e_{m}}+h_{m}(x)\id\Big]^{2}
+-\frac{J}{4}\sum_{x\in\Lamb}\sum_{m=1}^{3}
+\Big[\Gam^{(2)}_{x}-\Gam^{(2)}_{x+e_{m}}\Big]^{2}\\
+&+H_{U}+H_{\hop,\pi}+H_{\ph}+H_{\text{el-ph}} .
+\end{aligned}
+\label{eq:Hh}
+\end{equation}
+At $h=0$ the on-site squares cancel in \eqref{eq:Hh} and $H^{(\Lamb)}_{\PKH}(0)=H^{(\Lamb)}_{\PKH}$.
+The reason for this form is that a source on a bond dresses the pair operator by a
+constant, which converts the interaction into a positive square whose minimum is shifted;
+the sources are the handle by which Gaussian domination is proved.
+
+\begin{theorem}[Reflection positivity and Gaussian domination with on-site phonons]\label{thm:rp}
+Fix an even $L\ge2$, a reflection plane $P$, $\beta>0$, and real parameters
+$J>0$, $\omega>0$, $U$, $\kappa$, $g$. Let $\vartheta=\vartheta_{\maj}\otimes\theta_{\ph}$
+be the antilinear reflection which acts on Majoranas by
+$\vartheta_{\maj}(\xi_{x,\sigma})=\xi_{\theta(x),\sigma}$,
+$\vartheta_{\maj}(\eta_{x,\sigma})=-\eta_{\theta(x),\sigma}$ and on oscillators by
+reflection of the site labels with complex conjugation in the Fock basis, so that
+$\theta_{\ph}(q_{x})=q_{\theta(x)}$. Then:
+\begin{enumerate}
+\item the transformed Hamiltonian $\widetilde H^{(\Lamb)}(h)=\mathcal{U}H^{(\Lamb)}_{\PKH}(h)\mathcal{U}^{\dagger}$
+  has, for every reflection plane and every bond field that vanishes on the bonds
+  crossing $P$, the decomposition
+  \begin{equation}
+  \begin{aligned}
+  \widetilde H^{(\Lamb)}(h)={}&\mathcal{A}(h)+\vartheta\big(\mathcal{A}(h)\big)
+  -\frac{J}{2}\!\!\sum_{\substack{\langle x,y\rangle\in E_{\text{cross}}\\ x\in\Lamb_{-},\,y=\theta(x)}}\sum_{a=1}^{2}\Gam^{(a)}_{x}\,\vartheta\big(\Gam^{(a)}_{x}\big)\\
+  &-\frac{\ii\kappa}{2}\!\!\sum_{\substack{\langle x,y\rangle\in E_{\text{cross}}\\ x\in\Lamb_{-},\,y=\theta(x)}}\sum_{\sigma}\Big(\xi_{x,\sigma}\vartheta(\xi_{x,\sigma})+\eta_{x,\sigma}\vartheta(\eta_{x,\sigma})\Big),
+  \end{aligned}
+  \label{eq:decomp}
+  \end{equation}
+  where $\mathcal{A}(h)$ is supported on $\Lamb_{-}$ and contains the internal bonds,
+  the local interaction, and the complete on-site oscillator and Holstein terms on
+  $\Lamb_{-}$;
+\item for every $\beta>0$ the Gibbs state of $\widetilde H^{(\Lamb)}(0)$ is reflection
+  positive in the graded sense,
+  \begin{equation}
+  \Tr\big(A\,\vartheta(A)\,\tilde\rho_{\beta}\big)\ge0\quad(A\in\mathcal{A}(\Lamb_{-})^{\text{even}}),
+  \qquad
+  \Tr\big(B\,(\ii\vartheta(B))\,\tilde\rho_{\beta}\big)\ge0\quad(B\in\mathcal{A}(\Lamb_{-})^{\text{odd}});
+  \label{eq:rp}
+  \end{equation}
+\item the partition function of the source-dressed Hamiltonian obeys Gaussian domination,
+  \begin{equation}
+  Z^{(\Lamb)}_{\beta}(h):=\Tr_{\mathcal{H}(\Lamb)}\e^{-\beta H^{(\Lamb)}_{\PKH}(h)}
+  \le Z^{(\Lamb)}_{\beta}(0)\qquad\text{for all }h\in\R^{3|\Lamb|}.
+  \label{eq:gd}
+  \end{equation}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+By \eqref{eq:invariant} the electron-phonon and oscillator parts are invariant under $\mathcal{U}$, and
+the local interaction is invariant because it depends on $(n_{x}-1)^{2}$. The
+transformed on-site term on $\Lamb_{-}$ is
+$\sum_{x\in\Lamb_{-}}\big[\frac{U}{2}(P_{\mathcal{V}_{x}}-\id)+\omega b_{x}^{\dagger}b_{x}+g q_{x}(n_{x}-1)\big]$,
+which is (the on-site part of) $\mathcal{A}(h)$; no oscillator operator connects
+$\Lamb_{-}$ to $\Lamb_{+}$, because the parity \eqref{eq:parity} is a product of on-site operators.
+On a cross-plane bond $\langle x,\theta(x)\rangle$, the pair interaction becomes
+\begin{equation}
+\frac{J}{4}\Big[\Gam^{(1)}_{x}-\Gam^{(1)}_{\theta(x)}\Big]^{2}-\frac{J}{4}\Big[\Gam^{(2)}_{x}-\Gam^{(2)}_{\theta(x)}\Big]^{2}
+=-\frac{J}{2}\sum_{a=1}^{2}\Gam^{(a)}_{x}\vartheta\big(\Gam^{(a)}_{x}\big),
+\end{equation}
+using $(\Gam^{(a)})^{2}=P_{\mathcal{P}}$ and $\vartheta_{\maj}(\Gam^{(1)})=\Gam^{(1)}$,
+$\vartheta_{\maj}(\Gam^{(2)})=-\Gam^{(2)}$, which follow from \eqref{eq:gammamap}; the cross-plane
+hopping terms have the form displayed by the same computation as in
+\cite{koma2022}. This proves \eqref{eq:decomp}. Since the pair
+operators are even and the oscillator algebra is graded even, the decomposition is of
+Jaffe-Pedrocchi type, and the reflection-positivity statement of \cite{jaffe2015b} gives
+\eqref{eq:rp}. Gaussian domination \eqref{eq:gd} follows from \eqref{eq:rp} by the
+Lie-Trotter-Duhamel argument of \cite{dyson1978} applied to each of the three families of coordinate
+planes; the phonon coordinates do not enter the source term, so the Duhamel expansion is
+the same as in the purely electronic model.
+\end{proof}
+
+\begin{remark}[What is and is not used about the phonons]\label{rem:rpreally}
+Nothing in Theorem \ref{thm:rp} assumes that $g$ is small, that $\omega$ is large, or
+that $U_{\eff}$ has a sign. The phonons enter the reflection-positive structure only
+through the parity \eqref{eq:parity}; consequently reflection positivity, Gaussian domination and
+the infrared bound below hold for all real $g$ and all $\omega>0$. Where the strength of
+the coupling does matter is the quantitative sum rule of Section \ref{sec:sumrule}, not
+the positivity structure.
+\end{remark}
+
+\subsection{Infrared bound}
+
+Gaussian domination gives a bound on the Duhamel two-point function of the pair field,
+in the standard way. Let
+\begin{equation}
+\big(\hat\Gam^{(a)}_{\mathbf p},\hat\Gam^{(a)}_{-\mathbf p}\big)_{\beta}
+:=\frac{1}{Z^{(\Lamb)}_{\beta}}\int_{0}^{1}\Tr\Big(\e^{-(1-s)\beta H}\hat\Gam^{(a)}_{\mathbf p}\e^{-s\beta H}\hat\Gam^{(a)}_{-\mathbf p}\Big)\dd s
+\label{eq:duhamel}
+\end{equation}
+be the Duhamel correlation and $u_{\mathbf p}:=\frac13\sum_{\mu=1}^{3}\cos p_{\mu}$,
+$E_{\mathbf p}:=\sum_{\mu=1}^{3}\big(1-\cos p_{\mu}\big)=3\big(1-u_{\mathbf p}\big)$.
+
+\begin{corollary}[Infrared bound with phonons]\label{cor:ir}
+For every $\beta>0$, every $\omega>0$, every $J>0$ and all real $U,\kappa,g$, every
+$\mathbf p\in\Lambstar\setminus\{\mathbf Q\}$ and $a\in\{1,2\}$,
+\begin{equation}
+\big(\hat\Gam^{(a)}_{\mathbf p},\hat\Gam^{(a)}_{-\mathbf p}\big)_{\beta}\le\frac{1}{\beta J\,E_{\mathbf p+\mathbf Q}}
+=\frac{1}{3\beta J\big(1+u_{\mathbf p}\big)} .
+\label{eq:ir}
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+Because the source field $h_{m}(x)$ couples only to the purely fermionic pair
+operators $\Gam^{(1)}_{x}+\Gam^{(1)}_{x+e_{m}}$, the second derivative of
+$\ln Z^{(\Lamb)}_{\beta}(\varepsilon f)$ at $\varepsilon=0$ is a Duhamel correlation of
+pair fields and is non-positive by \eqref{eq:gd}. Taking a staggered source
+$\tilde f_{m}(x)=(-1)^{x_{1}+x_{2}+x_{3}}f_{m}(x)$ with
+$f_{m}(x)=|\Lamb|^{-1/2}(1-\e^{-\ii k_{m}})\e^{\ii k\cdot x}$ at $k=\mathbf p+\mathbf Q$
+and using $E_{\mathbf p+\mathbf Q}=3(1+u_{\mathbf p})$ gives \eqref{eq:ir}. The same bound for
+$a=2$ follows from the local pair-phase rotation $\e^{\ii\frac{\pi}{4}n_{x}}$, which
+commutes with $n_{x}-1$, $q_{x}$ and $b_{x}^{\dagger}b_{x}$ and therefore leaves the
+whole Hamiltonian, including the oscillator terms, invariant.
+\end{proof}
+
+\begin{remark}\label{rem:no-phonon-correction}
+There is no phonon correction to the constant in \eqref{eq:ir}, for a structural reason: the
+source couples to fermionic pair operators only, so the oscillator degrees of freedom
+do not appear in the second derivative at all, and the Duhamel expansion treats them as
+part of the unperturbed dynamics. This is the sharpest sense in which the Holstein
+coupling leaves the infrared structure untouched. The bound itself is the lattice
+infrared bound in the form familiar from spin systems \cite{frohlich1976,dyson1978},
+here for pair fields rather than spins and with the phonon Fock space left free.
+\end{remark}
+
+\subsection{Removing the oscillator cutoff}\label{sec:bridge}
+
+At finite oscillator cutoff $\fN$, replace $b_{x}$, $b_{x}^{\dagger}$ by their
+compressions $\Pi_{\fN,x}b_{x}\Pi_{\fN,x}$ on
+$\mathcal{H}^{(\fN)}=\mathcal{F}(\Lamb)\otimes\bigotimes_{x}\C^{\fN+1}$ and denote by
+$H^{(\Lamb,\fN)}(h)$ the resulting operator. The point of the next theorem is that the
+truncated model has the untruncated model as its trace-norm limit at fixed $L$, with
+error uniform in $\fN$ for the local part, so that \eqref{eq:rp} and \eqref{eq:gd} survive.
+
+\begin{theorem}[Bridge to unbounded oscillators]\label{thm:bridge}
+Fix an even $L\ge2$, $\beta>0$, $\omega>0$ and real $J>0,U,\kappa,g$, and let
+$h\in\R^{3|\Lamb|}$. Then as $\fN\to\infty$:
+\begin{enumerate}
+\item the compressed Gibbs operators converge in trace norm,
+  \begin{equation}
+  \Big\|\Pi_{\fN}\,\e^{-\beta H^{(\Lamb,\fN)}(h)}\,\Pi_{\fN}-\e^{-\beta H^{(\Lamb)}_{\PKH}(h)}\Big\|_{1}\longrightarrow0;
+  \label{eq:tracenorm}
+  \end{equation}
+\item consequently $Z^{(\Lamb,\fN)}_{\beta}(h)\to Z^{(\Lamb)}_{\beta}(h)$, and the
+  truncated Gibbs expectation of every bounded fermion operator, of every polynomial in
+  $q_{x},p_{x},b_{x}^{\dagger}b_{x}$ multiplied by a bounded fermion operator, and of
+  every pair correlator \eqref{eq:duhamel}, converges to the expectation in the unbounded model;
+\item the graded reflection positivity \eqref{eq:rp} and the Gaussian domination inequality
+  \eqref{eq:gd} hold for the untruncated Hamiltonian on $\mathcal{H}(\Lamb)$, and the infrared
+  bound \eqref{eq:ir} holds as stated.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Write $H^{(\Lamb)}_{\PKH}(h)=H_{\mathrm{loc}}+W(h)$ with
+$H_{\mathrm{loc}}=\sum_{x}h_{x}$ the sum of the commuting single-site operators of
+Lemma \ref{lem:polaron} and $W(h)$ purely electronic, bounded with norm
+$\|W(h)\|\le M_{\Lamb}(h)$ independent of $\fN$, and commuting with $\Pi_{\fN}$. By
+\eqref{eq:lower} each compressed local operator obeys
+$h^{(\fN)}_{x}\ge\frac{\omega}{2}\Pi_{\fN,x}b_{x}^{\dagger}b_{x}\Pi_{\fN,x}-c_{\mathrm{loc}}\Pi_{\fN,x}$
+with $c_{\mathrm{loc}}$ of \eqref{eq:lower} independent of $\fN$, so the compressed local
+semigroup satisfies the cutoff-uniform Schatten bound
+\begin{equation}
+\Tr\Big(\e^{-\beta H^{(\fN)}_{\mathrm{loc}}}\Big)\le\Big[\frac{4\e^{\beta c_{\mathrm{loc}}}}{1-\e^{-\beta\omega/2}}\Big]^{|\Lamb|}=:Z_{\mathrm{loc},*}(\beta)<\infty .
+\label{eq:schatten}
+\end{equation}
+Since $h^{(\fN)}_{x}\to h_{x}$ in the strong resolvent sense and \eqref{eq:lower} holds uniformly,
+$\|\e^{-sH^{(\fN)}_{\mathrm{loc}}}-\e^{-sH_{\mathrm{loc}}}\|_{1}\to0$ for every $s>0$. A
+Dyson-Duhamel expansion of $\e^{-\beta H^{(\fN)}}$ in the bounded perturbation
+$W_{\fN}=\Pi_{\fN}W(h)\Pi_{\fN}$ about the local generator then has its $k$-th
+integrand dominated in trace norm, uniformly in $\fN$, by
+$Z_{\mathrm{loc},*}(\beta)\|W(h)\|^{k}$, and each integrand converges in trace norm at
+every interior point of the $k$-simplex; dominated convergence in the trace class gives
+\eqref{eq:tracenorm}. For the moments in part 2, factor the semigroup at $\beta/2$ and note that
+$(b_{x}^{\dagger}b_{x}+\id)^{m}$ times the compressed semigroup stays bounded in
+operator norm uniformly in $\fN$ by \eqref{eq:lower}, while it converges strongly; then
+Gr\"umm's theorem gives trace-norm convergence after multiplication by the
+trace-class $\e^{-\frac{\beta}{2}H}$, and the correlators \eqref{eq:duhamel} follow by a further
+application of the same factorization. Part 3 follows by taking $\fN\to\infty$ in
+\eqref{eq:rp} and \eqref{eq:gd} at fixed $L$; the left sides converge by part 2, and the closedness of
+the cone of reflection-positive functionals, together with the positivity of the
+expectations in \eqref{eq:rp}, is preserved. The limit in this last step is legitimate because
+the matrix elements in \eqref{eq:rp} involve finitely many oscillator modes at any fixed
+fermion number sector.
+\end{proof}
+
+\begin{remark}[Order of limits]\label{rem:order}
+Theorem \ref{thm:bridge} is the only place where $\fN$ appears, and it is applied before
+any lattice limit. All constants in \eqref{eq:gd}, \eqref{eq:ir} and in the sum rule
+\eqref{eq:sumrule} are independent of $\fN$; the lattice limit is taken afterwards. This is the order \eqref{eq:order}. We emphasize that
+the theorem is a statement about fixed finite $L$; the uniform-in-$L$ statement is the
+content of the infrared bound and the sum rule, not of the trace-norm limit.
+\end{remark}
+
+\subsection{Bond phonons: an obstruction and where it stops}
+
+The odd-sublattice parity works because the Holstein coupling is on-site. A phonon that
+belongs to a single bond does not have this property. The following shows that the
+argument of this paper cannot be extended to a single oscillator shared by the two sites
+of a bond that crosses the reflection plane, and identifies the class of
+phonon-modulated interactions that does remain available.
+
+\begin{proposition}[Bond-coupled phonons]\label{prop:bond}
+Consider an extra term $H_{\mathrm{SSH},e}=g_{b}\,q_{e}O_{e}$ with a single oscillator
+$q_{e}=(b_{e}+b_{e}^{\dagger})/\sqrt2$ attached to a bond $e=\langle x,y\rangle$ that
+crosses $P$, and with $O_{e}$ any non-zero cross-plane bilinear such as
+$\Gam^{(1)}_{x}\Gam^{(1)}_{y}+\Gam^{(2)}_{x}\Gam^{(2)}_{y}$, single-electron hopping, or
+$(n_{x}-1)(n_{y}-1)$. Then:
+\begin{enumerate}
+\item if $\theta_{\ph}(q_{e})=-q_{e}$, the bosonic reflection positivity fails for every
+  $g_{b}$, since $\langle q_{e}\vartheta(q_{e})\rangle_{\beta}=-\langle q_{e}^{2}\rangle_{\beta}<0$;
+\item if $\theta_{\ph}(q_{e})=+q_{e}$, then $q_{e}$ commutes with the fermionic algebra
+  and has positive and negative eigenvalues, and in the negative eigensector the
+  cross-plane interaction has the wrong sign for $g_{b}>0$, so reflection positivity
+  fails for every $g_{b}\ne0$;
+\item by contrast, an interaction modulated by a symmetric product of on-site
+  oscillator operators,
+  \begin{equation}
+  H_{\text{pair-mod}}=\frac{J}{2}\sum_{\langle x,y\rangle}f(q_{x})f(q_{y})\Big(\Gam^{(1)}_{x}\Gam^{(1)}_{y}+\Gam^{(2)}_{x}\Gam^{(2)}_{y}\Big),
+  \label{eq:modmod}
+  \end{equation}
+  with $f$ a real polynomial or a bounded Borel function, retains the negative-square
+  form across every coordinate plane, with $D_{x,a}=f(\pm q_{x})\Gam^{(a)}_{x}$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Part 1 is the observation preceding \eqref{eq:parity}. For part 2, $q_{e}$ acts on the Fock space of
+one oscillator and is not a positive operator; compressed to $\fN\ge2$ it has eigenvalues
+$\pm\lambda_{k}$ with $\lambda_{k}\ne0$ (at $\fN=2$ the value $\pm1/\sqrt2$), while its
+commuting with the fermionic algebra means no fermionic square can repair the sign of
+$q_{e}\,C\vartheta(C)$ in the negative eigensector. Part 3: under $\mathcal{U}$ and
+$\vartheta$ the cross-plane part of \eqref{eq:modmod} is
+$-\frac{J}{2}\sum_{\langle x,\theta(x)\rangle}\sum_{a}D_{x,a}\vartheta(D_{x,a})$ with
+$D_{x,a}=f(\pm q_{x})\Gam^{(a)}_{x}$, since $f(q_{x})f(q_{\theta(x)})$ is reflection
+symmetric and the two signs arising from $\vartheta$ are those of $\Gam^{(a)}$. This is a
+negative square, and the internal bonds lie inside $\mathcal{A}$.
+\end{proof}
+
+Appendix \ref{app:checks} records an explicit finite matrix for part 2: on a two-site
+cluster with an oscillator at each site truncated to six levels, at $\beta=1.5$, $J=0.2$,
+$U=1$, $\omega=1$ and no Holstein coupling, a coupling of strength $1.5$ between the
+linear oscillator coordinate spanning the reflection plane and the cross-plane pair
+bilinear gives $\lambda_{\min}=-3.943830$ for the symmetric reflection, which is
+incompatible with reflection positivity. This is the reason Table \ref{tab:rows}
+contains only on-site Holstein couplings.
+
+\section{The double commutator and the sum rule}\label{sec:sumrule}
+
+The second modification is quantitative. The Falk-Bruch fluctuation inequality and the
+Kennedy-Lieb-Shastry sum rule require the double commutator of the pair operator with the
+Hamiltonian; with phonons this commutator is no longer momentum dependent, but it
+acquires a static, temperature-independent piece proportional to $U_{\mathrm{ph}}(1-r)$
+and one piece proportional to the displaced-oscillator density.
+
+\subsection{The commutator is on-site and momentum independent}
+
+\begin{lemma}[On-site Holstein double commutator]\label{lem:on-site}
+For every $x\in\Lamb$ the identities
+\begin{equation}
+\big[\Gam^{(1)}_{x},n_{x}-1\big]=-2\ii\Gam^{(2)}_{x},\qquad
+\big[\Gam^{(2)}_{x},n_{x}-1\big]=+2\ii\Gam^{(1)}_{x},
+\label{eq:dc1}
+\end{equation}
+\begin{equation}
+\big[\Gam^{(a)}_{x},\big[n_{x}-1,\Gam^{(a)}_{x}\big]\big]=-4\big(n_{x}-1\big),\qquad
+\sum_{a=1}^{2}\big[\Gam^{(a)}_{x},\big[n_{x}-1,\Gam^{(a)}_{x}\big]\big]=-8\big(n_{x}-1\big)
+\label{eq:dc2}
+\end{equation}
+hold, and consequently
+\begin{equation}
+\Big[\hat\Gam^{(a)}_{\mathbf p},\big[H_{\ph}+H_{\text{el-ph}},\hat\Gam^{(a)}_{-\mathbf p}\big]\Big]
+=-\frac{4g}{|\Lamb|}\sum_{x\in\Lamb}q_{x}\big(n_{x}-1\big)
+\qquad\text{for all }\mathbf p\in\Lambstar,\ a\in\{1,2\}.
+\label{eq:dc3}
+\end{equation}
+Averaging over $a$, the total double commutator
+$c_{\mathbf p}:=\frac12\sum_{a}\big\langle\big[\hat\Gam^{(a)}_{\mathbf p},\big[H,\hat\Gam^{(a)}_{-\mathbf p}\big]\big]\big\rangle_{\beta}$
+equals
+\begin{equation}
+c_{\mathbf p}=12J\,\mathcal{E}_{1}(\beta)+12J\,\mathcal{E}_{\mathrm{diag}}(\beta)u_{\mathbf p}+c^{(\kappa)}_{\mathbf p}(\beta)
+-\frac{4g}{|\Lamb|}\sum_{x\in\Lamb}\big\langle q_{x}(n_{x}-1)\big\rangle_{\beta},
+\label{eq:dc4}
+\end{equation}
+with
+\begin{equation}
+\begin{aligned}
+\mathcal{E}_{1}(\beta)&:=-\frac{1}{6|\Lamb|}\sum_{x\in\Lamb}\sum_{m=1}^{3}\big\langle\Gam^{(1)}_{x}\Gam^{(1)}_{x+e_{m}}+\Gam^{(2)}_{x}\Gam^{(2)}_{x+e_{m}}\big\rangle_{\beta},\\
+\mathcal{E}_{\mathrm{diag}}(\beta)&:=\frac{1}{3|\Lamb|}\sum_{\langle x,y\rangle}\big\langle(n_{x}-1)(n_{y}-1)\big\rangle_{\beta}\le1-r(\beta),
+\end{aligned}
+\label{eq:E1}
+\end{equation}
+where $r(\beta):=\frac{1}{|\Lamb|}\sum_{x}\langle P_{\mathcal{V}_{x}}\rangle_{\beta}\in[0,1]$
+is the vacancy density, and $c^{(\kappa)}_{\mathbf p}$ is the hopping double commutator.
+The first sum in \eqref{eq:E1} runs over the three positive directions, so that every bond is
+counted once. With this normalization the pair-hopping energy density is exactly
+$\frac{1}{|\Lamb|}\langle H_{\pair}\rangle_{\beta}=-3J\mathcal{E}_{1}(\beta)$, because
+\eqref{eq:Hpair} gives
+$H_{\pair}=\frac{J}{2}\sum_{x}\sum_{m=1}^{3}(\Gam^{(1)}_{x}\Gam^{(1)}_{x+e_{m}}+\Gam^{(2)}_{x}\Gam^{(2)}_{x+e_{m}})$;
+this identity is what converts the variational bound on the free energy into a lower
+bound on $\mathcal{E}_{1}$ in Section \ref{sec:finiteT}, and the same normalization
+enters the sum rule \eqref{eq:sumrule}. The local interaction $H_{U}$ contributes nothing.
+\end{lemma}
+
+\begin{proof}
+Start with the elementary identities \eqref{eq:dc1} and \eqref{eq:dc2}. Since
+$[n_{x}-1,\Delta_{x}^{\dagger}]=2\Delta_{x}^{\dagger}$,
+$[n_{x}-1,\Delta_{x}]=-2\Delta_{x}$ and $[\Gam^{(1)}_{x},\Gam^{(2)}_{x}]=2\ii(n_{x}-1)$,
+the pair interaction contributes $12J\mathcal{E}_{1}(\beta)+12J\mathcal{E}_{\mathrm{diag}}(\beta)u_{\mathbf p}$
+to the double commutator of \eqref{eq:dc4}, with the two coefficients defined there. The oscillator operators
+commute with all Majoranas and $[n_{y}-1,\Gam^{(a)}_{x}]=0$ for $y\ne x$, so the only
+non-vanishing contribution of the phonon terms to the double commutator is the on-site
+one, and summing the Fourier factors $\e^{-\ii\mathbf p\cdot x}\e^{+\ii\mathbf p\cdot x}=1$
+gives the oscillator identity \eqref{eq:dc3}. Combining this with the pair and hopping
+contributions gives \eqref{eq:dc4}.
+\end{proof}
+
+\begin{remark}[The two phonon contributions]\label{rem:twophonon}
+Equation \eqref{eq:dc3} says that the oscillator part of the double commutator is proportional to
+the thermal expectation of the local electron-phonon energy, with a fixed coefficient and
+no momentum dependence: the phonon cloud is local. It is this locality, and not any small
+parameter, which keeps the sum rule usable. The two terms in \eqref{eq:dc4} that involve $g$ are
+the ones bounded in the next subsection.
+\end{remark}
+
+\subsection{Bounds on the displaced-oscillator density}
+
+Define the density of displaced-oscillator excitations
+\begin{equation}
+\bar\nu(\beta):=\frac{1}{|\Lamb|}\sum_{x\in\Lamb}\big\langle\tilde b_{x}^{\dagger}\tilde b_{x}\big\rangle_{\beta}\ge0 ,
+\label{eq:nubar}
+\end{equation}
+with $\tilde b_{x}$ from \eqref{eq:polaron}. Because the polaron shift is exactly
+$q_{x}=\tilde q_{x}-\frac{g}{\omega}(n_{x}-1)$ with
+$\tilde q_{x}=(\tilde b_{x}+\tilde b_{x}^{\dagger})/\sqrt2$, the phonon contribution to
+\eqref{eq:dc4} splits into a static part and a fluctuation part.
+
+\begin{lemma}[Displaced-oscillator bounds]\label{lem:ph}
+For every finite even $L$, every $\beta>0$, every $\omega>0$ and all real $J>0,U,\kappa,g$,
+with constants independent of $L$:
+\begin{enumerate}
+\item exact split,
+  \begin{equation}
+  -\frac{g}{|\Lamb|}\sum_{x\in\Lamb}\big\langle q_{x}(n_{x}-1)\big\rangle_{\beta}
+  =U_{\mathrm{ph}}\big(1-r(\beta)\big)-\frac{g}{|\Lamb|}\sum_{x\in\Lamb}\big\langle\tilde q_{x}(n_{x}-1)\big\rangle_{\beta};
+  \label{eq:split}
+  \end{equation}
+\item variational (Cauchy-Schwarz) bound,
+  \begin{equation}
+  -\frac{g}{|\Lamb|}\sum_{x\in\Lamb}\big\langle q_{x}(n_{x}-1)\big\rangle_{\beta}
+  \le U_{\mathrm{ph}}\big(1-r(\beta)\big)+\sqrt2\,|g|\sqrt{\big(1-r(\beta)\big)\bar\nu(\beta)};
+  \label{eq:cs}
+  \end{equation}
+\item normal-ordered commutator bound,
+  \begin{equation}
+  -\frac{g}{|\Lamb|}\sum_{x\in\Lamb}\big\langle q_{x}(n_{x}-1)\big\rangle_{\beta}
+  \le U_{\mathrm{ph}}\big(1-r(\beta)\big)+\frac{\sqrt2\,|g|}{\omega}C_{\mathrm{comm}}\sqrt{\bar\nu(\beta)}
+  +\frac{U_{\mathrm{ph}}}{\omega}C_{\mathrm{comm}}\sqrt{1-r(\beta)},
+  \label{eq:comm}
+  \end{equation}
+  where $C_{\mathrm{comm}}=C_{\mathrm{comm}}(J,\kappa):=12J+2\sqrt6\,|\kappa|$ bounds
+  the electronic commutator $K_{x}=[H_{\pair}+H_{\hop,\pi},n_{x}-1]$ in operator norm on
+  the full Fock space, uniformly in $U$, $g$, $\omega$ and the volume. Because
+  $n_{y}-1$ commutes with every operator at a site $y\ne x$, only the six oriented terms
+  of \eqref{eq:Hpair} with one index at $x$ contribute to the pair part. Each carries the
+  prefactor $J/2$ and two components; by \eqref{eq:local-ids} and by
+  $\|\Gam^{(a)}_{x}\|=1$, the commutator of a component with $n_{x}-1$ has norm $2$, and
+  $\|\Gam^{(b)}_{x}\Gam^{(a)}_{y}\|=1$ because the two factors act on different sites. One
+  oriented term therefore contributes at most $(J/2)\cdot2\cdot2=2J$, and the pair part
+at most $12J$. For the hopping part fix a spin $\sigma\in\{\uparrow,\downarrow\}$ and put
+$D_{\sigma}:=\sum_{y\sim x}t^{(\pi)}_{x,y}a_{y,\sigma}$, the sum running over the six nearest
+neighbours $y$ of $x$, with $t^{(\pi)}_{y,x}=\overline{t^{(\pi)}_{x,y}}$. Since
+$[a_{x,\sigma}^{\dagger}a_{y,\sigma},n_{x}-1]=-a_{x,\sigma}^{\dagger}a_{y,\sigma}$ and
+$[a_{y,\sigma}^{\dagger}a_{x,\sigma},n_{x}-1]=a_{y,\sigma}^{\dagger}a_{x,\sigma}$ for $y\ne x$,
+the terms of \eqref{eq:Hhop} with one index at $x$ combine as
+$[H_{\hop,\pi},n_{x}-1]=X_{\uparrow}+X_{\downarrow}$ with
+$X_{\sigma}:=D_{\sigma}^{\dagger}a_{x,\sigma}-a_{x,\sigma}^{\dagger}D_{\sigma}$. The six
+operators in $D_{\sigma}$ act on distinct sites and anticommute, and
+$|t^{(\pi)}_{x,y}|=|\kappa|$, so $D_{\sigma}^{\dagger}D_{\sigma}+D_{\sigma}D_{\sigma}^{\dagger}=6\kappa^{2}\,\id$.
+Because $D_{\sigma}$ anticommutes with $a_{x,\sigma}$ and $a_{x,\sigma}^{\dagger}$, the cross
+terms of $X_{\sigma}^{\dagger}X_{\sigma}$ vanish and
+$X_{\sigma}^{\dagger}X_{\sigma}=n_{x,\sigma}D_{\sigma}D_{\sigma}^{\dagger}+(\id-n_{x,\sigma})D_{\sigma}^{\dagger}D_{\sigma}\le6\kappa^{2}\,\id$,
+where $n_{x,\sigma}$ commutes with $D_{\sigma}D_{\sigma}^{\dagger}$ and $D_{\sigma}^{\dagger}D_{\sigma}$.
+Hence $\|X_{\sigma}\|\le\sqrt6\,|\kappa|$, the hopping part is at most $2\sqrt6\,|\kappa|$,
+and $\|K_{x}\|\le12J+2\sqrt6\,|\kappa|$ for every real $\kappa$. The minimum in
+  \eqref{eq:Bph} uses whichever of the two bounds is smaller for the parameters at hand,
+  and $\mathcal{B}_{\ph}$ is increasing in $C_{\mathrm{comm}}$, so the certificate
+  evaluates the commutator bound with this constant;
+\item the bare second moment,
+  \begin{equation}
+  \begin{aligned}
+  \frac{1}{|\Lamb|}\sum_{x\in\Lamb}\big\langle q_{x}^{2}\big\rangle_{\beta}
+  \le{}&2\bar\nu(\beta)+1+\frac{2g^{2}}{\omega^{2}}\big(1-r(\beta)\big)\\
+  &+\frac{2|g|}{\omega}\sqrt{2\bar\nu(\beta)\big(1-r(\beta)\big)} .
+  \end{aligned}
+  \label{eq:q2}
+  \end{equation}
+\end{enumerate}
+Hence the phonon part of \eqref{eq:dc4} is bounded by $4\mathcal{B}_{\ph}(\beta)$ with
+\begin{equation}
+\begin{aligned}
+\mathcal{B}_{\ph}(\beta):={}&U_{\mathrm{ph}}\big(1-r(\beta)\big)\\
+&+\min\Big\{\sqrt2\,|g|\sqrt{\big(1-r(\beta)\big)\bar\nu(\beta)},\;
+\frac{\sqrt2\,|g|}{\omega}C_{\mathrm{comm}}\sqrt{\bar\nu(\beta)}+\frac{U_{\mathrm{ph}}}{\omega}C_{\mathrm{comm}}\sqrt{1-r(\beta)}\Big\}.
+\end{aligned}
+\label{eq:Bph}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Insert $q_{x}=\tilde q_{x}-\frac{g}{\omega}(n_{x}-1)$ and use $(n_{x}-1)^{2}=P_{\mathcal{P}_{x}}$
+with $\langle P_{\mathcal{P}_{x}}\rangle=1-\langle P_{\mathcal{V}_{x}}\rangle$ to get
+\eqref{eq:split}. For the Cauchy-Schwarz bound \eqref{eq:cs}, expand
+$0\le\big(\tilde b_{x}+\alpha\frac{g}{\sqrt2\omega}(n_{x}-1)\big)^{\dagger}\big(\tilde b_{x}+\alpha\frac{g}{\sqrt2\omega}(n_{x}-1)\big)$
+for $\alpha>0$, use $(n_{x}-1)^{2}=P_{\mathcal{P}_{x}}$, take the thermal expectation and
+optimize in $\alpha$. For \eqref{eq:comm}, use the equation of motion in the displaced frame,
+$[H,\tilde b_{x}^{\dagger}]=\omega\tilde b_{x}^{\dagger}+\frac{g}{\sqrt2\omega}K_{x}$,
+and the cyclicity of the trace at finite $L$ to eliminate the time derivative; the
+remainder is bounded by the operator Cauchy-Schwarz inequality applied to
+$\tilde b_{x}^{\dagger}(n_{x}-1)$. Equation \eqref{eq:q2} follows from
+$\langle\tilde q_{x}^{2}+\tilde p_{x}^{2}\rangle_{\beta}=2\bar\nu(\beta)+1$ and the same
+Cauchy-Schwarz step. The final display is the definition of $\mathcal{B}_{\ph}$, which
+takes the smaller of the two bounds.
+\end{proof}
+
+\begin{remark}[Where the static term comes from]\label{rem:static}
+The first term of \eqref{eq:split} is the whole story in the adiabatic limit: with the
+displaced coordinate $\tilde q_{x}$ set to zero, that is, with the oscillator following
+the charge exactly, the left-hand side of \eqref{eq:split} equals
+$\frac{g^{2}}{\omega}(1-r)=U_{\mathrm{ph}}\langle(n-1)^{2}\rangle$, which is twice the
+static displacement energy $\frac{U_{\mathrm{ph}}}{2}(1-r)$ gained by displacing. This
+term carries a plus sign in the sum rule and the Falk-Bruch step below can absorb it only
+through the energy range available from the pair interaction; the only way to reduce it
+is a negative correlation between the displacement fluctuation $\tilde q_{x}$ and the
+charge $n_{x}-1$, which is what the two Cauchy-Schwarz bounds of Lemma \ref{lem:ph}
+estimate. In contrast to the fermionic case, the sum rule therefore cannot be improved
+by taking $\beta$ large: the static term is temperature independent.
+\end{remark}
+
+\subsection{The sum rule}
+
+We need the Kennedy-Lieb-Shastry \cite{kennedy1988} weighted sum rule with the Falk-Bruch
+inequality \cite{falk1969}, as used in \cite{rens2026pkodlro}, transported to the
+Hamiltonian \eqref{eq:H} with the double commutator \eqref{eq:dc4}.
+
+\begin{theorem}[Sum rule with phonons]\label{thm:sumrule}
+Fix $\alpha\in(0,1]$, $\beta>0$, and real $J>0$, $U$, $\kappa$, $g$ with $\omega>0$. Set
+\begin{equation}
+c\big(r(\beta),\beta\big):=\frac{e_{\hop}\big(r(\beta)\big)}{6J}
++\frac{\mathcal{B}_{\ph}(\beta)}{3J}+\frac{I_{W}}{9\beta^{2}J^{2}},
+\label{eq:cdef}
+\end{equation}
+with $\mathcal{B}_{\ph}$ from \eqref{eq:Bph}, $I_{W}$ the cubic Watson integral of Appendix
+\ref{app:integrals}, and
+\begin{equation}
+e_{\hop}(r):=\min\Big\{2\sqrt6\,|\kappa|\sqrt r,\;2\sqrt3\,|\kappa|I_{\sin}\Big\},
+\label{eq:ehop}
+\end{equation}
+where $I_{\sin}:=\int_{[-\pi,\pi]^{3}}\frac{\dd^{3}p}{(2\pi)^{3}}\big(\sum_{\mu}\sin^{2}p_{\mu}\big)^{1/2}$.
+Then in the limit $L\to\infty$ along even $L$,
+\begin{equation}
+m_{0}^{2}(T)\ge\frac{1}{1+\alpha}\left[\alpha\big(1-r(\beta)\big)+\mathcal{E}_{1}(\beta)
+-\sqrt{J_{\mathrm{sq}}(\alpha)\Big(\mathcal{E}_{1}(\beta)+c\big(r(\beta),\beta\big)\Big)}\right],
+\label{eq:sumrule}
+\end{equation}
+with the squared-weight integral
+\begin{equation}
+J_{\mathrm{sq}}(\alpha):=\int_{[-\pi,\pi]^{3}}\frac{\dd^{3}p}{(2\pi)^{3}}\frac{\big(\alpha-u_{\mathbf p}\big)_{+}^{2}}{1+u_{\mathbf p}},
+\qquad u_{\mathbf p}=\frac13\sum_{\mu}\cos p_{\mu},\quad x_{+}:=\max(x,0).
+\label{eq:Jsq}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Let $\mathfrak g_{\mathbf p}:=\langle\hat\Gam^{(1)}_{\mathbf p}\hat\Gam^{(1)}_{-\mathbf p}\rangle_{\beta}$
+and $\mathfrak b_{\mathbf p}$ its Duhamel counterpart. The Falk-Bruch inequality gives
+$\mathfrak g_{\mathbf p}\ge\mathfrak b_{\mathbf p}\ge0$ and
+$\mathfrak g_{\mathbf p}^{2}\le\mathfrak b_{\mathbf p}^{2}+\frac{\beta}{4}\mathfrak b_{\mathbf p}\mathfrak c_{\mathbf p}$,
+where $\mathfrak c_{\mathbf p}:=\frac12\sum_{a}c^{(a)}_{\mathbf p}$. With the infrared
+bound \eqref{eq:ir}, $\mathfrak b_{\mathbf p}\le(3\beta J(1+u_{\mathbf p}))^{-1}$, so
+\begin{equation}
+\big(1+u_{\mathbf p}\big)\mathfrak g_{\mathbf p}^{2}\le\frac{1}{12J}\,\mathfrak c_{\mathbf p}
++\frac{1}{9\beta^{2}J^{2}\big(1+u_{\mathbf p}\big)}
+\qquad(\mathbf p\ne\mathbf Q).
+\label{eq:fb}
+\end{equation}
+Summing $\alpha(1-r)+\mathcal{E}_{1}$ over the Brillouin zone and isolating the
+$\mathbf Q$ component, where $u_{\mathbf Q}=-1$, gives
+\begin{equation}
+\alpha\big(1-r\big)+\mathcal{E}_{1}\le\frac{1+\alpha}{|\Lamb|}\mathfrak g_{\mathbf Q}
++\frac{1}{|\Lamb|}\sum_{\mathbf p\ne\mathbf Q}\big(\alpha-u_{\mathbf p}\big)_{+}\mathfrak g_{\mathbf p},
+\end{equation}
+and the Cauchy-Schwarz inequality with weights $\big(\alpha-u_{\mathbf p}\big)_{+}/\sqrt{1+u_{\mathbf p}}$
+and $\sqrt{1+u_{\mathbf p}}$ bounds the second term by
+$\sqrt{J_{\mathrm{sq}}(\alpha)}$ times the square root of
+$\frac{1}{12J}\frac{1}{|\Lamb|}\sum_{\mathbf p}\mathfrak c_{\mathbf p}+I_{W}/(9\beta^{2}J^{2})$,
+where we used that $\frac{1}{|\Lamb|}\sum_{\mathbf p}(1+u_{\mathbf p})^{-1}\to I_{W}$ by the
+symmetry $u_{\mathbf p+\mathbf Q}=-u_{\mathbf p}$. It remains to evaluate the momentum
+average of \eqref{eq:dc4}. The term $12J\mathcal{E}_{1}$ does not depend on $\mathbf p$ and
+survives the average, and the diagonal term $12J\mathcal{E}_{\mathrm{diag}}u_{\mathbf p}$
+averages to zero because $\sum_{\mathbf p}u_{\mathbf p}=0$. The hopping double commutator
+averages, exactly as in the kinetic-only identity of \cite{rens2026pkodlro}, to $-2$ times
+the $\pi$-flux hopping energy density of the same lattice, so after division by $12J$ it
+contributes at most $e_{\hop}(r)/(6J)$ because
+$\langle H_{\hop,\pi}\rangle/|\Lamb|\ge-e_{\hop}(r)$. The oscillator term is at most
+$4\mathcal{B}_{\ph}$ by \eqref{eq:Bph}, which is $\mathcal{B}_{\ph}/(3J)$ after division by
+$12J$. The average is therefore at most $\mathcal{E}_{1}+c(r,\beta)$ with $c$ of
+\eqref{eq:cdef}, and \eqref{eq:sumrule} follows.
+\end{proof}
+
+\begin{remark}[Sign and role of each term]\label{rem:sumrule-parts}
+Three features are worth separating. The term $\alpha(1-r)$ is the pair gain: a site that
+is empty or doubly occupied is available to the pair field and a singly occupied site is
+not, so this term grows with the density $1-r$ of sites outside the vacancy subspace, and
+it is the only one in the bracket that does. The term $\mathcal{E}_{1}$ is the pair
+energy: it is the quantity that the sum rule converts into the momentum-space
+correlation, at the price of the square root. The square root is the fluctuation cost: it
+contains the static phonon part $4U_{\mathrm{ph}}(1-r)$ of \eqref{eq:dc4}, divided by the
+same $12J$ that multiplies $\mathcal{E}_{1}$ and therefore entering as
+$\mathcal{B}_{\ph}/3J$, together with the hopping cost $e_{\hop}/6J$ and the temperature
+cost $I_{W}/(9\beta^{2}J^{2})$. The presence of $U_{\mathrm{ph}}$ inside the square root,
+with a plus sign, is exactly the quantitative loss of reach produced by the phonons.
+\end{remark}
+
+\section{From the sum rule to explicit floors}\label{sec:finiteT}
+
+Three quantities in \eqref{eq:sumrule} are not known explicitly at finite temperature: the pair energy
+$\mathcal{E}_{1}(\beta)$, the vacancy density $r(\beta)$, and the displaced-oscillator
+density $\bar\nu(\beta)$ that enters the square root. This section bounds them. The pair
+energy is bounded from below by a Gibbs variational bound, the vacancy density from above
+by a partition-function computation at zero hopping, and $\bar\nu$ from above jointly with
+$\mathcal{E}_{1}$ by an exact operator decomposition of the thermal energy. The result is
+a bound that involves only the temperature and the parameters, and which can therefore be
+certified numerically.
+
+\subsection{Variational polaron-dimer bound}
+
+\begin{lemma}[Gibbs variational bound with partial polaron displacement]\label{lem:var}
+Fix $\lambda\in[0,1]$, a field $h\ge0$ and $\beta_0>0$. With $g_{\eff}(\lambda)=J\e^{-2\lambda^{2}g^{2}/\omega^{2}}$
+from \eqref{eq:geff}, define the exact four-level dimer data
+\begin{equation}
+s(h):=\sqrt{\tfrac14+4h^{2}},\qquad e_{\max}(h):=\tfrac12+s(h),\qquad
+Z_{4}(b,h):=1+\e^{-b e_{\max}(h)}+\e^{-2b s(h)}+\e^{-b(e_{\max}(h)+1)},
+\end{equation}
+\begin{equation}
+m_{1}(b,h):=\frac{2h}{s(h)}\frac{1-\e^{-2bs(h)}}{Z_{4}(b,h)} .
+\end{equation}
+Let $f(\beta):=-\frac{1}{\beta|\Lamb|}\ln\Tr\e^{-\beta H^{(\Lamb)}_{\PKH}}$ be the free
+energy per site. The trial state constructed in the proof has energy per site
+$e_{\mathrm{trial}}(h,\lambda)$ and entropy per site $s_{\mathrm{trial}}(h,\lambda)$,
+neither of which depends on $\beta$, and $0\le s_{\mathrm{trial}}(h,\lambda)\le\ln2$.
+Then
+\begin{enumerate}
+\item for every $\beta>0$ the Gibbs variational inequality reads
+  \begin{equation}
+  f(\beta)\le e_{\mathrm{trial}}(h,\lambda)-\frac{1}{\beta}s_{\mathrm{trial}}(h,\lambda);
+  \label{eq:gibbstrial}
+  \end{equation}
+\item at $\beta=\beta_0$ this is $f(\beta_0)\le-\frac{U_{\eff}}{2}+F_{\mathrm{dimer}}(\beta_0;h,\lambda)$
+with
+\begin{equation}
+\begin{aligned}
+F_{\mathrm{dimer}}(\beta_0;h,\lambda):=g_{\eff}(\lambda)\Bigg(&-\frac{e_{\max}(h)}{2}-\frac{\ln Z_{4}\big(\beta_0g_{\eff}(\lambda),h\big)}{2\beta_0g_{\eff}(\lambda)}
++h\,m_{1}\big(\beta_0g_{\eff}(\lambda),h\big)\\
+&-\frac54 m_{1}\big(\beta_0g_{\eff}(\lambda),h\big)^{2}\Bigg)
++\frac{(1-\lambda)^{2}g^{2}}{2\omega},
+\end{aligned}
+\label{eq:Fdimer}
+\end{equation}
+by $e_{\mathrm{trial}}-s_{\mathrm{trial}}/\beta_0=-\frac{U_{\eff}}{2}+F_{\mathrm{dimer}}$.
+\end{enumerate}
+Consequently, with the rational grid $\lambda\in\{0,\frac15,\frac25,\frac35,\frac45,1\}$
+and $h\in\{0,\frac1{20},\dots,\frac{15}{20}\}$,
+\begin{equation}
+F_{\mathrm{up}}(\beta_0):=\min_{\lambda,h}F_{\mathrm{dimer}}(\beta_0;h,\lambda)
+\ge-\frac{1}{\beta_0|\Lamb|}\ln\Tr\e^{-\beta_0H^{(\Lamb)}_{\PKH}}+\frac{U_{\eff}}{2} .
+\label{eq:Fup}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Take the trial state
+$\rho^{(\lambda,h)}_{\mathrm{trial}}=U_{\mathrm{LF}}(\lambda)\big(\bigotimes_{d}\rho^{\mathrm{el}}_{\mathrm{dimer},d}(h)\otimes\bigotimes_{x}|0_{x}\rangle\langle 0_{x}|\big)U_{\mathrm{LF}}(\lambda)^{\dagger}$,
+where $d$ runs over $|\Lamb|/2$ disjoint nearest-neighbour dimers along the first axis,
+$\rho^{\mathrm{el}}_{\mathrm{dimer},d}(h)$ is the four-state trial state on the pair
+subspace $\mathcal{P}_{x}\otimes\mathcal{P}_{y}$ used in \cite{rens2026pkodlro}, and
+$|0_{x}\rangle$ is the oscillator vacuum. Because $\rho^{\mathrm{el}}_{\mathrm{dimer},d}$ is
+supported where $n_{x}-1=\pm1$, the displaced vacuum is a tensor product of Glauber
+coherent states with finite displacement $\alpha_{x}=-\lambda g\tau_{x}/(\sqrt2\omega)$,
+so the trial state is in the domain of $H$ and the Gibbs variational principle applies.
+The expectation of $H_{\pair}$ is the dimer pair hopping screened by the overlap
+$g_{\eff}(\lambda)/J$ of \eqref{eq:geff}, the expectation of $H_{\hop,\pi}$ vanishes on the pair
+subspace, and $H_{\ph}+H_{\text{el-ph}}+H_{U}$ contributes
+$-\frac{U_{\eff}}{2}+\frac{(1-\lambda)^{2}g^{2}}{2\omega}$ per site by \eqref{eq:polaron} and the
+definition of the trial state. The entropy is that of the electronic dimers, since the
+oscillator factor is pure: with $b=\beta_0g_{\eff}(\lambda)$ the dimer factor is the Gibbs
+state of a four-level system, whose mean energy is $-\partial_{b}\ln Z_{4}$ and whose
+entropy is $S_{4}=\ln Z_{4}-b\,\partial_{b}\ln Z_{4}$, so the entropy per site is
+$s_{\mathrm{trial}}=S_{4}/2\in[0,\ln2]$. Evaluating the electronic dimer expectation in
+the pair subspace at $\beta_0$, as in \cite{rens2026pkodlro}, then gives
+$e_{\mathrm{trial}}-s_{\mathrm{trial}}/\beta_0=-\frac{U_{\eff}}{2}+F_{\mathrm{dimer}}(\beta_0;h,\lambda)$
+with the closed form \eqref{eq:Fdimer}. Because the trial state does not depend on $\beta$, the
+Gibbs inequality gives \eqref{eq:gibbstrial} at every $\beta>0$. Finally
+$U_{\eff}$ enters only through the constants, which gives the bound \eqref{eq:Fup}.
+\end{proof}
+
+The Franck-Condon factor of \eqref{eq:geff} is the only place where the variational state feels the
+oscillator frequency, and the term $\frac{(1-\lambda)^{2}g^{2}}{2\omega}$ is the price of
+displacing by $\lambda$ rather than $1$. For $\lambda=1$ the two combine to give the exact
+polaron energy $-\frac{U_{\eff}}{2}$ with an exponentially small pair hopping, and for
+$\lambda=0$ one recovers the free dimer with the full $U_{\eff}$; intermediate fractions
+interpolate, and the minimum over the grid selects the best of them at each parameter
+point.
+
+\subsection{Energy-entropy decomposition with a frequency split}
+
+\begin{lemma}[Energy decomposition and entropy at split frequency]\label{lem:split}
+Fix $\varepsilon\in(0,1)$, $\beta_0>0$ and $\beta\ge\beta_0$. With $r(\beta)$ and
+$\mathcal{E}_{1}(\beta)$ from \eqref{eq:E1} and $\bar\nu(\beta)$ from \eqref{eq:nubar}, on $\mathcal{H}(\Lamb)$:
+\begin{enumerate}
+\item the thermal energy per site decomposes as
+  \begin{equation}
+  \frac{1}{|\Lamb|}\big\langle H^{(\Lamb)}_{\PKH}\big\rangle_{\beta}
+  =-3J\,\mathcal{E}_{1}(\beta)+\frac{1}{|\Lamb|}\big\langle H_{\hop,\pi}\big\rangle_{\beta}
+  +(1-\varepsilon)\omega\,\bar\nu(\beta)+\varepsilon\omega\,\bar\nu(\beta)+\frac{U_{\eff}}{2}r(\beta)-\frac{U_{\eff}}{2};
+  \label{eq:energy}
+  \end{equation}
+\item the fermion-phonon entropy satisfies
+  \begin{equation}
+  \frac{1}{\beta|\Lamb|}S(\rho_{\beta})-(1-\varepsilon)\omega\,\bar\nu(\beta)
+  \le\frac{1}{\beta}s_{\mathrm{el}}\big(r(\beta)\big)-\frac{1}{\beta_0}\ln\Big(1-\e^{-\beta_0(1-\varepsilon)\omega}\Big),
+  \qquad s_{\mathrm{el}}(r):=\ln2+H_{2}(r),
+  \label{eq:entropy}
+  \end{equation}
+  with $H_{2}(r)=-r\ln r-(1-r)\ln(1-r)$ the binary entropy.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Part 1 is \eqref{eq:polaron} together with the definitions of $\mathcal{E}_{1}$ and $r$; the
+oscillator energy is split as $\omega\bar\nu=(1-\varepsilon)\omega\bar\nu+\varepsilon\omega\bar\nu$
+without approximation. Part 2 uses subadditivity of the von Neumann entropy with respect
+to the fermion and displaced-oscillator factors, so that
+$S(\rho_{\beta})\le S(\rho^{\mathrm{el}}_{\beta})+\sum_{x}S(\tilde\rho^{\ph}_{\beta,x})$;
+the electronic factor is bounded by $\frac{1}{|\Lamb|}S\le\ln2+H_{2}(r)$, which is the
+vacancy-conditioned entropy bound of \cite{rens2026pkodlro}, and the single
+oscillator factor by the exact maximum of the entropy at fixed energy
+$(1-\varepsilon)\omega$, which is $\ln\big(1-\e^{-\beta_0(1-\varepsilon)\omega}\big)^{-1}$
+at the reference temperature; since $\beta\ge\beta_0$ the bound with $\beta_0$ dominates.
+\end{proof}
+
+The role of the split is to make the two sides compatible: the entropy is charged at the
+smaller frequency $(1-\varepsilon)\omega$, while the energy is measured with the full
+$\omega$. The remaining part $\varepsilon\omega\bar\nu$ of the oscillator energy in
+\eqref{eq:energy} is not charged against the entropy, and it is this part that gives the
+upper bound \eqref{eq:numax} on $\bar\nu$; at $\varepsilon=0$ it vanishes and no such bound
+follows. In the certified rows
+$\varepsilon=\frac12$.
+
+\subsection{Simultaneous bounds and the admissible domain}
+
+Combining Lemma \ref{lem:var} with Lemma \ref{lem:split} gives, for every
+$\beta\ge\beta_0$ and every trial pair $(\lambda,h)$, the following lower bound. The
+Gibbs state satisfies the exact identity
+$f(\beta)=\frac{1}{|\Lamb|}\langle H\rangle_{\beta}-\frac{1}{\beta|\Lamb|}S(\rho_{\beta})$;
+the fixed trial state gives \eqref{eq:gibbstrial}; and \eqref{eq:entropy} replaces
+$-\frac{1}{\beta|\Lamb|}S(\rho_{\beta})$ by $-(1-\varepsilon)\omega\bar\nu(\beta)$ minus
+$\frac{1}{\beta}s_{\mathrm{el}}(r)$ and minus $s_{\mathrm{osc}}$. Substituting into
+\eqref{eq:energy}, bounding $\langle H_{\hop,\pi}\rangle/|\Lamb|\ge-e_{\hop}(r)$, dropping
+the non-negative $\varepsilon\omega\bar\nu$, and using \eqref{eq:gibbstrial} gives a lower
+bound for $3J\mathcal{E}_{1}$ that carries the entropy combination
+$\frac{1}{\beta}\big(s_{\mathrm{trial}}-s_{\mathrm{el}}(r)\big)$. That combination is
+non-positive, because $s_{\mathrm{trial}}\le\ln2\le s_{\mathrm{el}}(r)$, so replacing
+$1/\beta$ by the larger $1/\beta_0$ lowers it, and the resulting
+$s_{\mathrm{trial}}/\beta_0$ combines with the trial energy into
+$F_{\mathrm{dimer}}=e_{\mathrm{trial}}+U_{\eff}/2-s_{\mathrm{trial}}/\beta_0$; the minimum
+over the trial grid turns $-e_{\mathrm{trial}}+s_{\mathrm{trial}}/\beta_0$ into
+$-F_{\mathrm{up}}-U_{\eff}/2$. The result is
+\begin{equation}
+3J\,\mathcal{E}_{1}(\beta)\ge-F_{\mathrm{up}}(\beta_0)-\frac{1}{\beta_0}s_{\mathrm{el}}\big(r(\beta)\big)-s_{\mathrm{osc}}(\beta_0,\varepsilon)
++\frac{U_{\eff}}{2}r(\beta)-e_{\hop}\big(r(\beta)\big)=:E_{\mathrm{lo}}\big(r(\beta)\big),
+\label{eq:Elo}
+\end{equation}
+\begin{equation}
+s_{\mathrm{osc}}(\beta_0,\varepsilon):=-\frac{1}{\beta_0}\ln\Big(1-\e^{-\beta_0(1-\varepsilon)\omega}\Big),
+\label{eq:sosc}
+\end{equation}
+and, simultaneously,
+\begin{equation}
+\begin{aligned}
+\bar\nu(\beta)\le{}&\bar\nu_{\max}\big(r(\beta),3J\mathcal{E}_{1}(\beta)\big)\\
+:={}&\frac{1}{\varepsilon\omega}\Big(F_{\mathrm{up}}(\beta_0)+\frac{1}{\beta_0}s_{\mathrm{el}}\big(r(\beta)\big)+s_{\mathrm{osc}}(\beta_0,\varepsilon)
+-\frac{U_{\eff}}{2}r(\beta)+e_{\hop}\big(r(\beta)\big)+3J\mathcal{E}_{1}(\beta)\Big)_{+}.
+\end{aligned}
+\label{eq:numax}
+\end{equation}
+Two further constraints hold. The star bound
+\begin{equation}
+3J\mathcal{E}_{1}(\beta)\le\sqrt3\,J\big(1-r(\beta)\big)
+\label{eq:star}
+\end{equation}
+follows by writing $6J\mathcal{E}_{1}(\beta)$ as the lattice average of the seven-site star
+operator of \cite{rens2026pkodlro}. That operator vanishes on a vacant site, and on a
+doubly occupied one it is twice the $XY$ coupling of a spin $\frac12$ to the total spin
+of the six neighbours, which has length at most $3$, so its largest eigenvalue is
+$2\sqrt3$ there and $6J\mathcal{E}_{1}\le2\sqrt3\,J(1-r)$. Similarly, when $\kappa=0$ and
+$U_{\eff}\ge0$, the vacancy partition bound
+\begin{equation}
+r(\beta)\le\frac{1}{1+\e^{\beta U_{\eff}/2}}\le\frac{1}{1+\e^{\beta_0U_{\eff}/2}}=:r_{\max}(\beta_0)
+\label{eq:rmax}
+\end{equation}
+follows because for $\kappa=0$ the projector $P_{\mathcal{V}_{x}}$ commutes with every
+term of the Hamiltonian, and conditioning on it produces the same oscillator spectrum
+shifted by $U_{\eff}$. When $\kappa\ne0$ or $U_{\eff}<0$ we set $r_{\max}(\beta_0):=1$.
+
+Consequently the pair $(r(\beta),\mathcal{E}_{1}(\beta))$ lies, for every
+$\beta\ge\beta_0$, in the compact admissible set
+\begin{equation}
+\mathcal{D}(\beta_0):=\Big\{(r,e)\in[0,r_{\max}(\beta_0)]\times\R_{\ge0}:\;\max\Big(0,\frac{E_{\mathrm{lo}}(r)}{3J}\Big)\le e\le\frac{1-r}{\sqrt3}\Big\},
+\label{eq:domain}
+\end{equation}
+where the pair energy is written in units of $3J$, so that $e\le(1-r)/\sqrt3$ is
+\eqref{eq:star} divided by $3J$; this is the variable used in the certification. Every
+point of $\mathcal{D}(\beta_0)$ can be inserted into \eqref{eq:sumrule}: the resulting
+right-hand side depends on the temperature only through $\beta\ge\beta_0$, and every
+temperature-dependent quantity on the right is enclosed by its value at $\beta_0$, in the
+direction that weakens the bound. The temperature cost $I_{W}/(9\beta^{2}J^{2})$ is
+largest at $\beta_0$, the entropy term $\frac{1}{\beta}s_{\mathrm{el}}(r)$ is largest at
+$\beta_0$ because $1/\beta\le1/\beta_0$, and the bound $\bar\nu_{\max}$ of \eqref{eq:numax}
+is written with both of them at $\beta_0$; so at a fixed point $(r,e)$ of the admissible
+set the phonon term $\mathcal{B}_{\ph}$ and with it $c$ are no smaller at $\beta_0$ than at
+any $\beta\ge\beta_0$, because $\mathcal{B}_{\ph}$ increases with $\bar\nu$. Conversely,
+$r_{\max}(\beta)=(1+\e^{\beta U_{\eff}/2})^{-1}$ is decreasing in $\beta$, so its value at
+$\beta_0$ allows the widest range of $r$. Estimating every term at $\beta_0$ therefore
+gives a lower bound on the right-hand side of \eqref{eq:sumrule} at all
+$\beta\ge\beta_0$, and it suffices to certify at $\beta_0$.
+
+\subsection{Certification over the domain}
+
+The final bound is the positive-part function
+\begin{equation}
+m_{0}^{2}(T)\ge\frac{1}{1+\alpha}\left[\alpha\big(1-r\big)+e-\sqrt{J_{\mathrm{sq}}(\alpha)\big(e+c(r,e,\beta_0)\big)}\right]
+\qquad\text{for all }(r,e)\in\mathcal{D}(\beta_0),
+\label{eq:final}
+\end{equation}
+where $c(r,e,\beta_0)$ is \eqref{eq:cdef} evaluated at $\beta=\beta_0$, with $\bar\nu$ replaced by
+its upper bound $\bar\nu_{\max}(r,3Je)$ of \eqref{eq:numax}; on each rectangle of the cover
+below it is replaced by its supremum over the rectangle, a constant. Positivity of the right-hand side of \eqref{eq:final} everywhere on
+$\mathcal{D}(\beta_0)$ is the certification condition.
+
+The function
+\begin{equation}
+f_{r}(e):=e-\sqrt{J_{\mathrm{sq}}(\alpha)\big(e+c\big)}
+\label{eq:fr}
+\end{equation}
+is strictly convex in $e$, because $\partial_{e}^{2}f_{r}=\frac14\sqrt{J_{\mathrm{sq}}(\alpha)}(e+c)^{-3/2}>0$,
+with a single stationary point at $e^{*}=\frac14J_{\mathrm{sq}}(\alpha)-c$; its minimum on
+a closed interval is therefore attained at the stationary point if it lies inside the
+interval, and at an endpoint otherwise. In the variable $r$ the function is smooth, the
+entropy $H_{2}$ is concave, and $E_{\mathrm{lo}}(r)$ is obtained from the grid minimum,
+so that no monotonicity in $r$ is available; consequently the domain is covered by
+closed rectangles rather than by a point grid.
+
+The coverage used in the accompanying script consists of $300$ closed strips
+$I_{k}=[r_{k},r_{k+1}]$ that exhaust $[0,r_{\max}(\beta_0)]$, each of them subdivided into
+$16$ closed subintervals $J_{k,j}$ of the admissible interval
+$[\max(0,E_{\mathrm{lo}}/(3J)),(1-r)/\sqrt3]$ evaluated over $I_{k}$. All endpoints are
+outward rounded, so that neighbouring rectangles overlap and the closed rectangles
+$I_{k}\times J_{k,j}$ cover $\mathcal{D}(\beta_0)$. On each rectangle the binary entropy
+$H_{2}$, the two forms of the hopping cost, the linear vacancy term
+$\frac{U_{\eff}}{2}r$ and the bound $(1-r)/\sqrt3$ are enclosed by interval arithmetic.
+The function $\bar\nu_{\max}$ of \eqref{eq:numax} is increasing in $e$, so its supremum
+over $J_{k,j}$ is attained at the upper endpoint, and both chain estimates for
+$\mathcal{B}_{\ph}$, the direct one and the double-commutator one, are evaluated there;
+their smaller upper bound is kept. The minimum of $f_{r}$ over $J_{k,j}$ is enclosed by
+convexity, using the stationary point when it lies inside the subinterval and the
+appropriate endpoint otherwise. The certified floor is the minimum over all rectangles of
+the lower endpoint of the enclosure of $\big(\alpha(1-r)+f_{r}(e)\big)/(1+\alpha)$. All
+arithmetic is carried out with fifty significant decimal digits and outward rounding, so
+that each reported floor is a rigorous lower bound under the stated hypotheses.
+
+\begin{remark}[What the interval arithmetic does and does not cover]\label{rem:ia}
+The interval computation covers the two-dimensional admissible set
+$\mathcal{D}(\beta_0)$ and the lattice integrals of Appendix \ref{app:integrals}, and it
+produces a lower bound that holds simultaneously for all $\beta\ge\beta_0$ and all
+$(r,e)$ allowed by the two finite-temperature bounds. It does not certify anything about
+the model beyond the hypotheses of Theorem \ref{thm:cert}: in particular a positive floor
+at a given parameter point is a statement about the sum rule and the two bounds, and the
+absence of a positive floor at another point is not a statement about the model.
+\end{remark}
+
+\section{Main theorem and certified parameter points}\label{sec:main}
+
+\subsection{The theorem}
+
+\begin{theorem}[Bounds on the pair order parameter at $T\le T_0$]\label{thm:cert}
+Let $J>0$, $\omega>0$ and $U,\kappa,g\in\R$, and let $U_{\mathrm{ph}}=g^{2}/\omega$,
+$U_{\eff}=U+U_{\mathrm{ph}}$. Assume either
+\begin{enumerate}
+\item[(i)] $\kappa=0$ and $U_{\eff}\ge-\frac{J}{2}$ (zero hopping), or
+\item[(ii)] $\kappa\ne0$, $U_{\eff}\ge0$ and $|\kappa|/J\le\frac12$ ($\pi$-flux lattice).
+\end{enumerate}
+Fix $\alpha\in\{\frac12,\frac34,1\}$, $\varepsilon=\frac12$ and a threshold $\beta_0>0$
+with $T_0=1/\beta_0$. If the certification condition holds, that is if
+\begin{equation}
+m_{0,\mathrm{lo}}^{2}:=\min_{\substack{0\le k<N_{r}\\0\le j<N_{E}}}\;\inf\left(\frac{\alpha\big(1-I_{k}\big)+f_{I_{k}}\big(J_{k,j}\big)}{\alpha+1}\right)>0
+\label{eq:cond}
+\end{equation}
+with $f$ from \eqref{eq:fr} and $c$ from \eqref{eq:cdef}, then for every $0<T\le T_0$
+\begin{equation}
+m_{0}^{2}(T)\ge m_{0,\mathrm{lo}}^{2}>0,\qquad\text{hence}\qquad m^{2}_{\ODLRO}(T)\ge\frac12 m_{0,\mathrm{lo}}^{2}>0,
+\label{eq:conclusion}
+\end{equation}
+in the thermodynamic limit taken as in \eqref{eq:order}.
+\end{theorem}
+
+\begin{proof}
+By Theorem \ref{thm:bridge} the reflection positivity, Gaussian domination and infrared
+bound hold on the untruncated oscillator space at every even $L$; by Corollary
+\ref{cor:ir} the infrared bound is \eqref{eq:ir}. Lemma \ref{lem:on-site} and Lemma \ref{lem:ph}
+give the double commutator with its phonon parts, and Theorem \ref{thm:sumrule} gives
+\eqref{eq:sumrule} at fixed $L$. Lemma \ref{lem:var} and Lemma \ref{lem:split} give the three
+finite-temperature constraints \eqref{eq:energy}, \eqref{eq:numax} and the star and
+vacancy bounds \eqref{eq:star} and \eqref{eq:rmax}, so the pair
+$(r,\mathcal{E}_{1})$ lies in $\mathcal{D}(\beta_0)$ for all $\beta\ge\beta_0$. At a
+fixed point of $\mathcal{D}(\beta_0)$ the correction $c$ of \eqref{eq:cdef} is no larger at
+$\beta$ than at $\beta_0$: $\mathcal{B}_{\ph}$ of \eqref{eq:Bph} increases with
+$\bar\nu$, and $\bar\nu(\beta)$ is bounded by the $\beta$-independent $\bar\nu_{\max}$
+of \eqref{eq:numax}, while $I_{W}/(9\beta^{2}J^{2})$ decreases in $\beta$. The right-hand
+side of \eqref{eq:sumrule} decreases with $c$, so at $\beta\ge\beta_0$ it is at least its
+value at $\beta_0$ at the same point of $\mathcal{D}(\beta_0)$, and hence at least the
+infimum of the right-hand side at $\beta_0$ over the larger set $\mathcal{D}(\beta_0)$,
+which is what the interval enclosure \eqref{eq:final} computes. Positivity of that infimum gives the bound \eqref{eq:conclusion} at fixed $L$,
+uniformly in $L$ because all the constants in \eqref{eq:sumrule} and in the
+finite-temperature constraints are independent of $L$. Taking
+$L\to\infty$ along even $L$ gives the stated $\liminf$. Finally \eqref{eq:factor2} converts the bound
+on $m_{0}^{2}$ into the bound on $m^{2}_{\ODLRO}$.
+\end{proof}
+
+\begin{remark}[Reading the theorem]\label{rem:reading}
+The theorem is a statement of the form: if the explicit function \eqref{eq:final} is positive at a
+parameter point, then the pair order parameter is bounded below there at every
+temperature below $T_0$. The hypotheses (i) and (ii) are those of the released theorem
+without phonons \cite{rens2026pkodlro}: they concern $U_{\eff}$ rather than $U$ because
+of \eqref{eq:polaron}, and this is the sense in which phonons change the admissible parameter region.
+No claim is made that \eqref{eq:final} is positive at any point where it has not been certified, and
+no claim is made about the largest $T_0$ at which it is positive.
+\end{remark}
+
+\subsection{The fifteen certified parameter points}
+
+Table \ref{tab:rows} lists the parameter points at which \eqref{eq:final} has been certified with
+outward-rounded interval arithmetic. In each row the pair-hopping amplitude is the unit,
+$J=1$, the reported floor is the certified lower bound on $m_{0}^{2}(T)$ at all
+$0<T\le T_0$, and the last column is the corresponding bound on the pair order
+parameter itself, obtained from \eqref{eq:factor2} by halving and truncating.
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{2.4pt}
+\begin{tabular}{@{}rlrrrrrrrrr@{}}
+\toprule
+Row & regime & $U/J$ & $|\kappa|/J$ & $\omega/J$ & $g/J$ & $U_{\mathrm{ph}}/J$ & $U_{\eff}/J$ & $T_0/J$ & $m_{0}^{2}\ge$ & $m^{2}_{\ODLRO}\ge$\\
+\midrule
+1 & zero hopping, weak repulsion & $-0.50$ & $0$ & $2.0$ & $0.25$ & $0.03125$ & $-0.46875$ & $0.065$ & $8.7232\cdot10^{-3}$ & $4.3616\cdot10^{-3}$\\
+2 & zero hopping, weak repulsion & $-0.52$ & $0$ & $50.0$ & $1.60$ & $0.0512$ & $-0.4688$ & $0.050$ & $1.4148\cdot10^{-2}$ & $7.0740\cdot10^{-3}$\\
+3 & soft phonon & $0$ & $0$ & $0.01$ & $0.002$ & $0.0004$ & $0.0004$ & $0.004$ & $5.0292\cdot10^{-2}$ & $2.5146\cdot10^{-2}$\\
+4 & adiabatic phonon & $0$ & $0$ & $0.10$ & $0.025$ & $0.00625$ & $0.00625$ & $0.025$ & $4.1730\cdot10^{-2}$ & $2.0865\cdot10^{-2}$\\
+5 & intermediate phonon & $0$ & $0$ & $1.00$ & $0.18$ & $0.0324$ & $0.0324$ & $0.075$ & $1.9195\cdot10^{-2}$ & $9.5975\cdot10^{-3}$\\
+6 & fast phonon & $0$ & $0$ & $5.00$ & $0.70$ & $0.098$ & $0.098$ & $0.060$ & $4.3915\cdot10^{-3}$ & $2.1957\cdot10^{-3}$\\
+7 & anti-adiabatic phonon & $0$ & $0$ & $25.0$ & $1.60$ & $0.1024$ & $0.1024$ & $0.060$ & $8.3300\cdot10^{-3}$ & $4.1650\cdot10^{-3}$\\
+8 & on-site attraction & $4.0$ & $0$ & $2.00$ & $0.40$ & $0.08$ & $4.08$ & $0.300$ & $2.9544\cdot10^{-2}$ & $1.4772\cdot10^{-2}$\\
+9 & strong attraction & $10.0$ & $0$ & $5.00$ & $0.75$ & $0.1125$ & $10.1125$ & $0.350$ & $6.7152\cdot10^{-3}$ & $3.3576\cdot10^{-3}$\\
+10 & $\pi$-flux, weak hopping & $0$ & $0.02$ & $1.0$ & $0.15$ & $0.0225$ & $0.0225$ & $0.060$ & $1.1220\cdot10^{-2}$ & $5.6100\cdot10^{-3}$\\
+11 & $\pi$-flux, weak hopping & $0$ & $0.05$ & $2.0$ & $0.12$ & $0.0072$ & $0.0072$ & $0.030$ & $5.7017\cdot10^{-4}$ & $2.8508\cdot10^{-4}$\\
+12 & $\pi$-flux, attractive & $4.0$ & $0.10$ & $2.0$ & $0.35$ & $0.06125$ & $4.06125$ & $0.120$ & $6.1437\cdot10^{-3}$ & $3.0718\cdot10^{-3}$\\
+13 & $\pi$-flux, strong attraction & $10.0$ & $0.20$ & $5.0$ & $0.60$ & $0.072$ & $10.072$ & $0.160$ & $5.5618\cdot10^{-3}$ & $2.7809\cdot10^{-3}$\\
+14 & $\pi$-flux, strong hopping & $12.0$ & $0.35$ & $10.0$ & $0.35$ & $0.01225$ & $12.01225$ & $0.060$ & $6.8403\cdot10^{-3}$ & $3.4201\cdot10^{-3}$\\
+15 & $\pi$-flux, max. hopping & $20.0$ & $0.50$ & $10.0$ & $0.45$ & $0.02025$ & $20.02025$ & $0.080$ & $5.5839\cdot10^{-4}$ & $2.7919\cdot10^{-4}$\\
+\bottomrule
+\end{tabular}
+\caption{Certified rows. Every entry is a lower bound for all $0<T\le T_0$, in the
+thermodynamic limit taken as \eqref{eq:order}, at $\varepsilon=\frac12$ and with the weight
+$\alpha=\frac12$ except row 8, where $\alpha=\frac34$. The pair-hopping amplitude is the
+unit, so all entries are dimensionless multiples of $J$ powers as indicated. The
+$U_{\mathrm{ph}}$ and $U_{\eff}$ columns follow from \eqref{eq:Uph}; the last column is half the
+preceding floor, truncated, and bounds $m^{2}_{\ODLRO}$ by \eqref{eq:factor2}. Rows 1 and 2 lie in the
+zero-hopping regime (i) with $U_{\eff}\ge-J/2$; rows 3 to 9 are also zero hopping; rows 10
+to 15 satisfy $|\kappa|/J\le\frac12$ and $U_{\eff}\ge0$ and lie in regime (ii).}
+\label{tab:rows}
+\end{table}
+
+\begin{remark}[On the size of the floors]\label{rem:floors}
+The floors are not small in the sense of numerical resolution; they are small in the sense
+of being rigorous lower bounds on a condensate fraction, and they range over two orders of
+magnitude across the table. The largest floors occur where the vacancy term is favourable
+and the threshold temperature is small (rows 3 to 5); the smallest occur where either the
+hopping cost is large (rows 11 and 15) or the vacancy sector is strongly suppressed by
+attraction (row 9). In all cases the bound is positive, which is the content of the
+theorem.
+\end{remark}
+
+\section{Regimes, limits of the method, and what is not claimed}\label{sec:scope}
+
+\subsection{The phonon frequency window}
+
+Rows 3 to 7 sweep the phonon frequency from $\omega=0.01J$ to $\omega=25J$ at weak
+Holstein coupling, that is from the adiabatic to the anti-adiabatic regime, and all are
+certified. This is a structural feature of the method rather than an accident of the
+chosen parameters: the oscillator frequency enters the certified bound only through the
+static shift $U_{\mathrm{ph}}=g^{2}/\omega$ and through the oscillator entropy bound
+$s_{\mathrm{osc}}(\beta_0,\varepsilon)=-\beta_0^{-1}\ln\big(1-\e^{-\beta_0(1-\varepsilon)\omega}\big)$
+of \eqref{eq:sosc}, which at $\varepsilon=\frac12$ is
+$-\beta_0^{-1}\ln(1-\e^{-\beta_0\omega/2})$. That term is at most $T_0$ once
+$\beta_0\omega\gtrsim1$ and decays exponentially for larger $\beta_0\omega$, while as
+$\omega\to0$ it grows only logarithmically,
+$s_{\mathrm{osc}}\sim\beta_0^{-1}\ln\big(2/(\beta_0\omega)\big)$. It is not bounded
+uniformly as $\omega\to0$ at fixed $T_0$: the logarithm diverges, slowly, so the strict
+adiabatic limit is reached by lowering $T_0$ together with $\omega$, which is how rows 3
+and 4 are certified. There is no frequency threshold in the statement of the theorem, and
+the certified floors do vary with $\omega$, because both the static shift, which grows
+like $1/\omega$, and the entropy term do.
+
+\subsection{Phonon-mediated attraction and the boundary of the zero-hopping regime}
+
+The zero-hopping regime requires $U_{\eff}=U+g^{2}/\omega\ge-J/2$, whereas the same
+condition reads $U\ge-J/2$ without phonons. Because $U_{\mathrm{ph}}>0$, the admissible
+interval of the local interaction is shifted upwards by $g^{2}/\omega$: a model with
+$U=-0.52J$, which is outside the interval for the purely electronic theorem, is inside it
+once $g^{2}/\omega=0.0512J$. Rows 1 and 2 are two such points, and they are the ones in
+which the phonons change the qualitative conclusion rather than the numerical size of the
+floor. The mechanism is exactly \eqref{eq:polaron}: the static shift is an energy that the oscillator
+can supply, and the pair term only needs the total local coupling to stay above
+$-J/2$. This is the precise sense in which on-site phonons act as an attractive
+interaction here, and the reason the model is called a Holstein extension rather than a
+perturbation of the purely electronic model.
+
+The phonon shift is not, however, a substitute for the pair hopping. If $J=0$ the pair
+interaction vanishes and there is no order parameter to bound: the pair energy
+$\mathcal{E}_{1}$ of \eqref{eq:E1} is zero and the whole argument is empty. The attraction generated by the phonons lowers the cost of doubly
+occupied sites, but the mechanism that orders pairs is the Penson-Kolb term
+\cite{penson1986}, as in the released theorem.
+
+\subsection{Strong coupling to the phonons, and where the bound degrades}
+
+The bound degrades as the coupling to the phonons grows, and the reason is visible in
+\eqref{eq:split}: the phonon part $\mathcal{B}_{\ph}/3J$ of the difference enters the
+square root of \eqref{eq:sumrule} with a plus sign and consumes the energy that the star
+bound \eqref{eq:star} supplies. How far the argument reaches is a property of the
+enumeration rather than of the model, and it can be measured on the same terms as Table
+\ref{tab:rows}. For $U=0$, $\kappa=0$, $\alpha=\frac12$ and $T_0=0.06J$, with the
+$300\times16$ cover used in the table, the certified floor is positive only for
+$g/J\le0.3169$, $0.4568$ and $0.7499$ at $\omega/J=1$, $2$ and $5$, that is for
+$U_{\mathrm{ph}}/J\le0.1004$, $0.1043$ and $0.1125$; at the next coupling in the bisection
+the method returns no floor. Beyond them the bare-pair sum rule gives nothing and this
+route to positivity is closed.
+
+Where the loss comes from is not the static term in this range. Entering as
+$4\mathcal{B}_{\ph}/12J=\mathcal{B}_{\ph}/3J$, the two phonon pieces of
+$\mathcal{B}_{\ph}$ contribute to the $c$ of \eqref{eq:cdef} the amounts
+$U_{\mathrm{ph}}(1-r)/3J\approx0.0271$ and $\sqrt2\,g\sqrt{(1-r)\bar\nu}/3J\approx0.0447$
+at $\omega=J$, at the minimising rectangle $r\approx0.190$, with the temperature term
+$6.1\times10^{-4}$; the displaced-oscillator piece is the larger of the two and is the one
+that introduces the loss as the coupling is turned on. The same decomposition holds at the
+other two frequencies, with the same ordering and a minimising rectangle moving to smaller
+$r$: $0.0283$ against $0.0467$ at $\omega=2J$, at $r\approx0.186$, and $0.0308$ against
+$0.0502$ at $\omega=5J$, at $r\approx0.178$. The upper end of the enclosed $c$ of
+\eqref{eq:cdef} at these rectangles is $0.0724$, $0.0756$ and $0.0817$ at
+$\omega/J=1$, $2$ and $5$. The script \texttt{probe\_static.py} repeats
+the certificate of \eqref{eq:final} rectangle by rectangle and prints these numbers
+together with the rectangle at which they are attained.
+
+Two rows of Table \ref{tab:rows} are close to that boundary in this sense. Row 6, at
+$\omega=5J$ and $U_{\mathrm{ph}}/J=0.0980$, lies at $93.3\%$ of the boundary coupling for
+its own parameters, and row 7, at $\omega=25J$ and $U_{\mathrm{ph}}/J=0.1024$, lies at
+$87.0\%$. Their windows are therefore close to the degradation in the coupling, although
+their thresholds are far from it in temperature. The remaining rows are certified at
+smaller $U_{\mathrm{ph}}/J$, or at $|U|=10$ where the pair interaction supplies more
+energy, or with $\kappa\ne0$; the location of the boundary is not worked out for those.
+
+In the regime $U_{\mathrm{ph}}\gtrsim J$ the physically relevant object is not the bare
+pair but the dressed one: an electron that carries its own phonon cloud, described by the
+Lang-Firsov transformation \cite{langfirsov1963} and its generalizations. The variational
+state of Lemma \ref{lem:var} already contains a partial version of that dressing through
+$g_{\eff}(\lambda)$, but the sum rule is written for the bare pair operator
+$\Delta_{x}=a_{x,\downarrow}a_{x,\uparrow}$, and the Franck-Condon physics of a dressed pair,
+together with the competing charge-density-wave order that dominates that regime (see
+\cite{miyao2016} for the Holstein-Hubbard case), is not treated here.
+
+\subsection{What the paper does not claim}
+
+\begin{itemize}
+\item \emph{A critical temperature.} The threshold $T_0$ in Theorem \ref{thm:cert} is a
+  value at which the explicit function \eqref{eq:final} is positive. The bound is a statement at
+  $T\le T_0$, and no monotonicity in $T$ of any correlation, and no transition, follows.
+\item \emph{The bare-pair sum rule beyond a finite coupling.} As measured in the previous
+  subsection, the certified floor is positive only for $U_{\mathrm{ph}}/J\le0.1004$,
+  $0.1043$ and $0.1125$ at $\omega/J=1$, $2$ and $5$ for $U=0$ and $\kappa=0$, and it
+  fails above those couplings. Beyond the certified rows, no positivity is claimed, and
+  the limit quoted is a limit of this enumeration: a sharper bound on
+  $\bar\nu(\beta)$, or a sum rule written for a dressed operator, would move it.
+\item \emph{Polaron and charge-density-wave physics.} The regime in which the phonon cloud
+  is strongly bound to the electron, and the competing charge order that appears there,
+  are not treated. Nothing here excludes, or confirms, that order.
+\item \emph{Dressed-pair off-diagonal long-range order.} Whether the polaron-dressed pair
+  operator has long-range order at positive temperature is an open problem. The sum rule
+  proved here concerns the bare pair operator, and no statement about a dressed operator
+  is made.
+\item \emph{Lattices other than the $\pi$-flux one.} Only the $\pi$-flux lattice with
+  $|\kappa|/J\le\frac12$ is covered in the hopping regime, together with the zero-hopping
+  case. The zero-flux lattice with $\kappa\ne0$ stays open: the reflection-positive
+  decomposition \eqref{eq:decomp} fails there, as the check in Appendix \ref{app:checks}
+  shows, where reversing the sign of the $\pi$-flux hopping on one bond, which leaves a
+  zero-flux plaquette, drives the odd-sector Gram matrix negative; and no other route to
+  a spatial pair infrared bound is available to us.
+\item \emph{Other parameter points.} The fifteen rows of Table \ref{tab:rows} are the
+  certified parameter points. A parameter point absent from the table is not a point at
+  which the order parameter vanishes; it is a point at which this method has not been
+  certified, either because some hypothesis of Theorem \ref{thm:cert} fails there or
+  because the certified function \eqref{eq:final} is not positive under the interval enclosure.
+\item \emph{Materials and superconductivity.} No material, and no identification of the
+  model with any superconductor, is claimed. The order parameter bounded here is the
+  staggered pair correlation of a lattice model, and the interaction is a pair hopping,
+  not an electronic Coulomb interaction.
+\end{itemize}
+
+\subsection{Open problems}
+
+Three developments would extend the reach of the argument, in increasing order of
+difficulty. The first is the zero-flux case, where the reflection-positive decomposition
+fails and any progress must come from a different positivity structure. The second is the
+strong-coupling regime, where the sum rule would have to be written for a dressed pair
+operator whose commutator with the Hamiltonian is not on-site. The third is the
+combination of the two, where both obstructions are present and where the physics is that
+of the Holstein-Hubbard model at strong coupling. In each case the structural part of this
+paper, namely the reflection-positive decomposition with the odd-sublattice parity and the
+trace-norm bridge to unbounded oscillators, is available without change; the quantitative
+part would have to be redone.
+
+\section{Supporting material and disclosures}\label{sec:supp}
+
+This preprint has not been peer reviewed.
+
+The accompanying replay supplement contains five Python scripts. The script
+\texttt{replay.py} reproduces the finite checks: interval enclosures of the lattice
+integrals of Appendix \ref{app:integrals}, exact finite-matrix operator identities, the
+reflection-positive Gram matrices at oscillator cutoffs $\fN=4,6,8,10$, the two
+obstruction checks of Section \ref{sec:rp}, and the fifteen certified rows of Table
+\ref{tab:rows} with their interval enclosures. The script \texttt{probe\_xover.py} imports
+that certificate and locates the positivity boundary of Section \ref{sec:scope} by
+bisection in the Holstein coupling, at the three frequencies quoted there and for rows 6
+and 7 of the table. The script \texttt{probe\_static.py} repeats that certificate rectangle
+by rectangle and prints the decomposition of the cost quoted in Section \ref{sec:scope},
+at the boundary coupling and at the minimising rectangle. The script \texttt{mutants.py}
+applies seven semantic modifications of
+the certified computation, each of which must be rejected. The script \texttt{run\_all.py}
+runs the suites and reports their exit codes. The digest list \texttt{SHA256SUMS} contains
+the SHA-256 digest of every file in the supplement.
+
+Passing these checks establishes no analytic statement: they verify arithmetic, matrix
+identities on small systems, and the closure of the certified enclosures. The proofs of
+Sections \ref{sec:model} to \ref{sec:main} are independent of the scripts.
+
+\paragraph{Use of software and language models.}
+AI agents generated proofs, certificates, code, and manuscript drafts and edits under
+D.~Rens' direction and review. Numerical enclosures used \texttt{mpmath} interval
+arithmetic, and the linear algebra checks used \texttt{numpy} and \texttt{scipy}. The
+analytic statements are presented with complete arguments, but no hand verification of
+every algebraic step was performed, and readers relying on any particular bound should
+check it against the proof as a whole.
+
+\paragraph{Data availability.}
+The released preprint \cite{rens2026pkodlro} and its replay supplement
+\cite{rens2026pkodlrosupp} contain the corresponding results for the model without
+phonons, and the present paper is written so that the two can be read in parallel. The
+replay scripts described above accompany this paper. This preprint is archived at
+\href{https://doi.org/10.5281/zenodo.24433375}{\nolinkurl{doi:10.5281/zenodo.24433375}}, its
+replay supplement at
+\href{https://doi.org/10.5281/zenodo.24433377}{\nolinkurl{doi:10.5281/zenodo.24433377}}, and
+the exact released source tree, together with the released PDF, at
+\href{https://github.com/SuperMatics-Inc/penson-kolb-holstein-pair-odlro}{\nolinkurl{github.com/SuperMatics-Inc/penson-kolb-holstein-pair-odlro}}.
+
+\appendix
+
+\section{Numerical verification computations}\label{app:checks}
+
+This appendix records what the accompanying scripts compute, with the values they produce.
+All of it is finite-dimensional or arithmetic in character; none of it is used in the
+proof of any analytic statement.
+
+\paragraph{Operator identities.}
+On the four-dimensional on-site fermion space, the maximum absolute deviation from the
+identities \eqref{eq:dc1} and \eqref{eq:dc2}, and from $(n_{x}-1)^{2}=P_{\mathcal{P}_{x}}$ together with
+$(n_{x}-1)P_{\mathcal{P}_{x}}=(n_{x}-1)$, are all $0.00\times10^{0}$, that is zero to
+machine precision.
+
+\paragraph{Reflection-positive Gram matrices at finite cutoff.}
+On the two-site cluster with $\pi$-flux single-electron hopping amplitude $\kappa=0.4$, pair amplitude $J=1$,
+Holstein coupling $g=0.6$ and oscillator cutoff $\fN$, the reflection-positive Gram matrix
+of the even graded algebra and of the odd sector have smallest eigenvalues
+
+\begin{center}
+\begin{tabular}{@{}rrrr@{}}
+\toprule
+$\fN$ & $\lambda_{\min}$ (even) & $\lambda_{\min}$ (odd) & $\lambda_{\min}$, trace sector, bond phonon\\
+\midrule
+4 & $-7.714\cdot10^{-17}$ & $+2.658\cdot10^{-4}$ & $-2.093\cdot10^{-16}$\\
+6 & $-2.916\cdot10^{-17}$ & $+2.860\cdot10^{-4}$ & $-3.847\cdot10^{-16}$\\
+8 & $-4.167\cdot10^{-17}$ & $+2.868\cdot10^{-4}$ & $-4.095\cdot10^{-16}$\\
+10 & $-1.484\cdot10^{-16}$ & $+2.868\cdot10^{-4}$ & $-1.803\cdot10^{-16}$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The even-sector and trace-sector values are zero up to the roundoff of the
+double-precision Hermitian eigendecomposition, and the odd sector is strictly positive;
+the pattern is stable as the cutoff is increased, which is the finite-cutoff
+consistency check for Theorem \ref{thm:rp}. This is a check on a two-site system and does
+not replace the proof.
+
+\paragraph{Obstructions.}
+Two further matrices on the same cluster document the failures of Section \ref{sec:rp}:
+taking the oscillator reflection antisymmetrically, $\theta_{\ph}(q_{x})=-q_{\theta(x)}$,
+gives $\lambda_{\min}=-0.0263317$ in the odd sector. The failure of part 2 is documented
+on the two-site cluster with an oscillator at each site truncated to six levels, at
+$\beta=1.5$, $J=0.2$, $U=1$, $\omega=1$ and no Holstein coupling: with a coupling of
+strength $1.5$ between the linear oscillator coordinate spanning the reflection plane and
+the cross-plane pair bilinear, the smallest eigenvalue of the reflection Gram matrix is
+$\lambda_{\min}=-3.943830$.
+
+\paragraph{Certified rows.}
+The fifteen rows of Table \ref{tab:rows} are produced by enclosing
+$\mathcal{D}(\beta_0)$ in $300\times16$ rectangles and minimizing over them, as described
+in Section \ref{sec:finiteT}. The exact lower endpoints of the row enclosures, before the
+truncation to five significant digits used in the table, are
+
+\begin{center}
+\begin{tabular}{@{}rlll@{}}
+\toprule
+Row & $m_{0}^{2}\ge$ (exact lower endpoint) & Row & $m_{0}^{2}\ge$ (exact lower endpoint)\\
+\midrule
+1 & $0.00872325$ & 9 & $0.00671523$\\
+2 & $0.0141487$ & 10 & $0.0112208$\\
+3 & $0.0502927$ & 11 & $0.000570174$\\
+4 & $0.0417303$ & 12 & $0.00614375$\\
+5 & $0.0191956$ & 13 & $0.00556189$\\
+6 & $0.00439155$ & 14 & $0.00684033$\\
+7 & $0.00833005$ & 15 & $0.000558395$\\
+8 & $0.0295446$ & & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{Adversarial modifications.}
+Seven semantic modifications of the certified computation are each rejected, in the sense
+that the modified computation either produces a negative value where positivity is
+required, or fails an exact identity, or violates a variational inequality that the correct
+computation satisfies. The seven are: omitting the odd-sublattice phonon parity, which
+makes the even-sector Gram matrix negative ($-0.107318$) and leaves the odd sector at the
+same negative value as the antisymmetric reflection, $-0.0263317$; dropping the static
+phonon term from the sum rule, which violates the exact double-commutator identity by
+$0.3729567$ and lets an inadmissible point be certified ($0.0096857$ where the correct
+function is $-0.0082233$); reflecting the
+oscillators antisymmetrically, which makes the odd-sector Gram matrix negative
+($-0.0263317$); reversing the sign of the $\pi$-flux single-electron hopping, as on an
+unfrustrated link, which makes the
+odd-sector Gram matrix negative ($-0.4392627$); coupling the oscillator coordinate
+spanning the reflection plane to the cross-plane pair bilinear, which makes the Gram
+matrix negative ($-3.943830$); taking an excessive Holstein coupling $g=2$ at $U=0$,
+$\omega=1$, where the certified function is negative ($-1.7159$) while the modified
+variational dimer free energy violates the Gibbs bound ($-2.50000$ against an exact value
+of $-2.07210$); and pushing the threshold temperature to $T_0=2.5J$, above the
+three-dimensional XY ceiling, where the certified function is $-0.63308$ while a reversed
+monotonicity in $\beta$ would report $+0.0073385$.
+
+\section{Lattice integrals}\label{app:integrals}
+
+Three Brillouin-zone integrals enter the certified bound. With
+$u_{\mathbf p}=\frac13\sum_{\mu}\cos p_{\mu}$, they are
+\begin{equation}
+\begin{aligned}
+I_{W}&:=\int_{[-\pi,\pi]^{3}}\frac{\dd^{3}p}{(2\pi)^{3}}\frac{1}{1+u_{\mathbf p}},\qquad
+I_{\sin}:=\int_{[-\pi,\pi]^{3}}\frac{\dd^{3}p}{(2\pi)^{3}}\Big(\sum_{\mu}\sin^{2}p_{\mu}\Big)^{1/2},\\
+J_{\mathrm{sq}}(\alpha)&:=\int_{[-\pi,\pi]^{3}}\frac{\dd^{3}p}{(2\pi)^{3}}\frac{(\alpha-u_{\mathbf p})_{+}^{2}}{1+u_{\mathbf p}} .
+\end{aligned}
+\end{equation}
+The first is the cubic Watson integral \cite{watson1939,glasser1977}, for which the
+closed form
+\begin{equation}
+I_{W}=\frac{\sqrt6}{32\pi^{3}}\,\Gamma\Big(\frac{1}{24}\Big)\Gamma\Big(\frac{5}{24}\Big)\Gamma\Big(\frac{7}{24}\Big)\Gamma\Big(\frac{11}{24}\Big)
+\label{eq:watson}
+\end{equation}
+holds after the substitution $\mathbf p\mapsto\mathbf p+\mathbf Q$, which maps
+$u_{\mathbf p}$ to $-u_{\mathbf p}$. The enclosing values used in the certified rows are
+\begin{equation}
+\begin{aligned}
+I_{W}&\in[1.516386059,\,1.516386060],\qquad
+I_{\sin}\in[1.179837674,\,1.207622426],\\
+J_{\mathrm{sq}}\big(\tfrac12\big)&\in[1.408389235,\,1.408950133],\qquad
+J_{\mathrm{sq}}\big(\tfrac34\big)\in[2.143651662,\,2.143715091],\\
+J_{\mathrm{sq}}(1)&\in[3.065544236,\,3.065544237].
+\end{aligned}
+\end{equation}
+The integrands for $I_{\sin}$ and $J_{\mathrm{sq}}$ are monotone on cells of the
+Brillouin zone, which allows them to be enclosed by evaluating cosines and sines at cell
+endpoints; the singularity of $J_{\mathrm{sq}}$ at $\mathbf p=\mathbf Q$ is integrable and
+is removed by exact subtraction against \eqref{eq:watson}, using
+$(\alpha-u)^{2}=(1+\alpha)^{2}-(1+u)\big(2(1+\alpha)-(1+u)\big)$ and the identity that
+relates the removed part to $I_{W}$. The Watson integral itself is handled through the
+closed form \eqref{eq:watson} with interval arithmetic on the gamma functions.
+
+\sloppy
+\bibliographystyle{plain}
+\bibliography{refs}
+
+\end{document}
