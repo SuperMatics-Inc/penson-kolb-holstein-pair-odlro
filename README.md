@@ -1,4 +1,5 @@
 # Positive-temperature pair long-range order in the three-dimensional pi-flux Penson-Kolb-Hubbard-Holstein model with unbounded phonons
+Research record: [Positive-temperature pair long-range order in the three-dimensional π-flux Penson-Kolb-Hubbard-Holstein model with unbounded phonons](https://supermatics.io/research/pk-holstein-pair-odlro).
 
 Davis Rens, SuperMatics Inc., [ORCID 0000-0001-5839-5197](https://orcid.org/0000-0001-5839-5197)
 
